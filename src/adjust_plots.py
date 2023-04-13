@@ -277,6 +277,39 @@ def scale_figure(height_to_width, A0_ratio, x_plots, y_plots,
             A0_format['width']*A0_ratio*x_plots,
                    A0_format['height']*A0_ratio*y_plots*height_to_width)}
 
+# ##################################################
+# ######  AXES TOOLS   ##############################
+# ##################################################
+
+def flatten(AX):
+    """
+    to be used in 
+    "for ax in flatten(AX)"
+    """
+    List = []
+    for ax in AX:
+        if type(ax) is list:
+            List = List+ax
+        else:
+            List.append(ax)        
+    return np.array(List).flatten()
+
+def set_common_xlims(AX, lims=None):
+    if lims is None:
+        lims = [np.inf, -np.inf]
+        for ax in flatten(AX):
+            lims = [np.min([ax.get_xlim()[0], lims[0]]), np.max([ax.get_xlim()[1], lims[1]])]
+    for ax in flatten(AX):
+        ax.set_xlim(lims)
+        
+def set_common_ylims(AX, lims=None):
+    if lims is None:
+        lims = [np.inf, -np.inf]
+        for ax in flatten(AX):
+            lims = [np.min([ax.get_ylim()[0], lims[0]]), np.max([ax.get_ylim()[1], lims[1]])]
+    for ax in flatten(AX):
+        ax.set_ylim(lims)
+
 
 
 if __name__=='__main__':
