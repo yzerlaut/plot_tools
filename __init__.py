@@ -6,6 +6,7 @@ from .src.adjust_plots import *
 from .src.legend import *
 from .src.export import *
 from .src.annotations import *
+from .src.figure import *
 
 def set_style(label='manuscript'):
     """
