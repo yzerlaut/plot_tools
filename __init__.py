@@ -3,6 +3,7 @@ from matplotlib import pylab
 
 from .src.inset import *
 from .src.adjust_plots import *
+from .src.colors import *
 from .src.legend import *
 from .src.export import *
 from .src.annotations import *
