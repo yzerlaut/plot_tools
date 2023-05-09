@@ -111,12 +111,12 @@ def figure(axes = (1,1),
         dim =  dimension_calculus(figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
 
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
-                                  mm2inch(dim['full_height'])), facecolor=cls.facecolor)
+                                  mm2inch(dim['full_height'])))
         for g in grid:
             ax = plt.subplot2grid((y_plots, x_plots),
                                   (g[1], g[0]),
                                   colspan=g[2],
-                                  rowspan=g[3], facecolor=cls.facecolor)
+                                  rowspan=g[3])
             AX.append(ax)
     else:
         if axes_extents is not None:
@@ -131,10 +131,10 @@ def figure(axes = (1,1),
         y_plots = np.sum([axes_extents[i][0][1] \
                           for i in range(len(axes_extents))])
 
-        dim =  dimension_calculus(cls, figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+        dim =  dimension_calculus(figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
 
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
-                                  mm2inch(dim['full_height'])), facecolor=cls.facecolor)
+                                  mm2inch(dim['full_height'])))
 
         j0_row = 0
         for j in range(len(axes_extents)):
@@ -145,8 +145,7 @@ def figure(axes = (1,1),
                                                 (y_plots, x_plots),
                                                 (j0_row, i0_line),\
                                                 colspan=axes_extents[j][i][0],
-                                                rowspan=axes_extents[j][i][1],
-                                                facecolor=cls.facecolor))
+                                                rowspan=axes_extents[j][i][1]))
                 i0_line += axes_extents[j][i][0]
             j0_row += axes_extents[j][i][1]
             AX.append(AX_line)
