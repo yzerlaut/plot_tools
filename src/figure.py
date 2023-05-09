@@ -4,7 +4,7 @@ import matplotlib.pylab as plt
 def mm2inch(x):
     return x/25.4
 
-PROSP = {
+PROPS = {
     'fontsize':8,
     'default_color':'k',
     'single_plot_size':(22., 16.), # mm
