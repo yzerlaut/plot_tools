@@ -37,8 +37,8 @@ def dimension_calculus(figsize,
     calculate the dimension quantities required by *matplotlib* plt.figure object
     """
     dimension, cls = {}, Env()
-    
-    # horizontal 
+
+    # horizontal
     dimension['full_width'] = left*figsize[0]*cls.left_size+\
         right*figsize[0]*cls.right_size+\
         x_plots*figsize[0]*figsize[0]*cls.single_plot_size[0]+\
@@ -67,7 +67,7 @@ def figure(axes = (1,1),
            bottom=1., top=1.,
            wspace=1., hspace=1.,
            reshape_axes=True):
-    
+
     """
     scales figures according to the specification of "settings.py" (for each graph environment)
 
@@ -103,13 +103,13 @@ def figure(axes = (1,1),
     """
 
     AX = []
-    
+
     if grid is not None:
         x_plots = np.max([g[0]+g[2] for g in grid])
         y_plots = np.max([g[1]+g[3] for g in grid])
 
-        dim =  dimension_calculus(cls, figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
-        
+        dim =  dimension_calculus(figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
                                   mm2inch(dim['full_height'])), facecolor=cls.facecolor)
         for g in grid:
@@ -125,17 +125,17 @@ def figure(axes = (1,1),
         else:
             axes_extents = [[[1,1] for j in range(axes[0])]\
                             for i in range(axes[1])]
-                
+
         x_plots = np.sum([axes_extents[0][j][0] \
                           for j in range(len(axes_extents[0]))])
         y_plots = np.sum([axes_extents[i][0][1] \
                           for i in range(len(axes_extents))])
 
         dim =  dimension_calculus(cls, figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
-        
+
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
                                   mm2inch(dim['full_height'])), facecolor=cls.facecolor)
-        
+
         j0_row = 0
         for j in range(len(axes_extents)):
             AX_line = []
@@ -151,7 +151,7 @@ def figure(axes = (1,1),
             j0_row += axes_extents[j][i][1]
             AX.append(AX_line)
 
-    
+
     if dim['left']>=(1-dim['right']):
         print('left=%.2f and right=%.2f leads to a too large space' % (dim['left'], dim['right']),
               'set to 0.2, & 0.95 respectively')
@@ -161,7 +161,7 @@ def figure(axes = (1,1),
               'set to 0.2, & 0.95 respectively')
         dim['bottom'], dim['top'] = 0.2, 0.95
 
-        
+
     # # Subplots placements adjustements
     plt.subplots_adjust(left=dim['left'],
                         bottom=dim['bottom'],
@@ -181,7 +181,7 @@ def figure(axes = (1,1),
     else:
         return fig, AX
 
-    
+
 if __name__=='__main__':
 
     import sys
@@ -189,7 +189,7 @@ if __name__=='__main__':
 
     # from datavyz import graph_env_manuscript as ge
     # import itertools, string
-    
+
     # from datavyz.main import graph_env
     # ge = graph_env('manuscript')
 
@@ -203,7 +203,7 @@ if __name__=='__main__':
     # # fig2, AX2 = ge.figure(axes_extents=[\
     # #                                     [[1,1], [1,1], [1,1]],
     # #                                     [[2,2], [1,2]]])
-    
+
     # fig2, AX2 = ge.figure(axes_extents=[\
                                         # [[1,1], [3,1]],
                                         # [[4,1]],
@@ -215,7 +215,7 @@ if __name__=='__main__':
 
     # # leave first axis empty for drawing
     # AX2[0][0].axis('off') # space for docs/schematic.svg
-    
+
     # # time series plot
     # AX2[0][1].plot(t, y)
     # ge.set_plot(AX2[0][1], xlabel='xlabel (xunit)', ylabel='ylabel (yunit)')
@@ -235,11 +235,11 @@ if __name__=='__main__':
     # ge.bar(np.random.randn(8),
            # COLORS=[ge.viridis(i/7) for i in range(8)],
             # ax=AX2[2][1], xlabel='ylabel (yunit)')
-    
+
     # # pie plot
     # ge.pie([0.25,0.4,0.35], ax=AX2[2][2], ext_labels=['Set 1', 'Set 2', 'Set 3'])
 
-    
+
     # # looping on all plots to add the top left letter:
     # for i, fig, AX in zip(range(3), [fig1, fig2], [AX1, AX2]):
         # for l, ax in zip(list(string.ascii_lowercase), itertools.chain(*AX)):
@@ -253,6 +253,6 @@ if __name__=='__main__':
     # put_list_of_figs_to_svg_fig(['docs/schematic.svg', fig],
                                 # fig_name='fig.svg',
                                 # Props={'XCOORD':[0,0], 'YCOORD':[0,0]})
-        
+
     # ge.show()
 
