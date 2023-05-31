@@ -8,8 +8,9 @@ from .src.legend import *
 from .src.export import *
 from .src.annotations import *
 from .src.figure import *
-from .src.pie_plots import *
-from .src.line_plots import plot
+from .src.pie import *
+from .src.violin import *
+from .src.line import plot
 
 def set_style(label='manuscript'):
     """
