@@ -11,6 +11,7 @@ from .src.figure import *
 from .src.pie import *
 from .src.violin import *
 from .src.line import plot
+from .src.scatter import scatter
 
 def set_style(label='manuscript'):
     """
