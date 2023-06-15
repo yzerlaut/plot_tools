@@ -42,24 +42,14 @@ def scatter(x=None, y=None, sx=None, sy=None,
             COLORS=None, colormap=viridis,
             ax=None, fig=None,
             lw=0, alpha_std=0.3,
-            ms=4,
-            m='', ls='-',
-            xlabel='', ylabel='', bar_label='', title='',
-            label=None,
-            LABELS=None,
-            fig_args={},
-            axes_args={},
-            bar_legend_args=None,
-            legend_args=None,
-            no_set=False):
+            ms=4, m='o', ls='-',
+            label=None, LABELS=None):
     """    
     return fig, ax
     """
     # getting or creating the axis
     if ax is None:
         fig, ax = plt.subplots(1)
-    else:
-        fig = None
         
     if (y is None) and (Y is None):
         y = x
@@ -72,12 +62,12 @@ def scatter(x=None, y=None, sx=None, sy=None,
             X = [np.arange(len(y)) for y in Y]
 
         multiple_curves(ax, X, Y, sX, sY, COLORS, LABELS,
-                        colormap=colormap,
+                        colormap=colormap, marker=m,
                         lw=lw, ms=ms)
     else:
         single_curve(ax, x, y, sx, sy,
                      color=color, edgecolor=edgecolor, alpha=alpha,
-                     label=label, lw=lw, ms=ms)
+                     marker=m, label=label, lw=lw, ms=ms)
 
     return fig, ax
 
