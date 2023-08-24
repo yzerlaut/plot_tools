@@ -5,7 +5,9 @@ from matplotlib.figure import Figure
 def annotate(stuff, s, xy,
              xycoords='axes fraction',
              bold=False, italic=False,
-             rotation=0, fontsize=8, color='k', clip_on=False,
+             rotation=0,
+             fontsize=None, color=None,
+             clip_on=False,
              ha='left', va='bottom', 
              weight='normal', style='normal'):
     """

@@ -19,6 +19,13 @@ import sys
 sys.path.append('../..')
 import plot_tools as pt
 pt.set_style('dark')
+import matplotlib.pylab as plt
+
+# %%
+import numpy as np
+fig, ax = plt.subplots(figsize=(6,2))
+pt.scatter(np.random.randn(100), np.random.randn(100), ax=ax)
+pt.annotate(ax, 'skjdfh', (0.5, 1), color='lightgrey')
 
 # %% [markdown]
 # ## Test Environment
@@ -30,6 +37,6 @@ def test_function():
     """
     this = 0
     that = 1
-    print('that\' it', this, that)
+    print('that\'s it', this, that)
 
 test_function()
