@@ -8,6 +8,12 @@
 pip install git+https://github.com/yzerlaut/plot_tools
 ```
 
+### tests
+
+```
+python -m plot_tools.src.time_freq
+```
+
 ## Matplotlib style sheets
 
 All available style sheets are in [./stylesheets](./stylesheets)
