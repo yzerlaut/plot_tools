@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-from figure import figure
-from adjust_plots import set_plot
-from annotations import draw_bar_scales
-from legend import legend
+from .figure import figure
+from .adjust_plots import set_plot
+from .annotations import draw_bar_scales
+from .legend import legend
 
 
 def time_freq(t, freqs, coefs,
