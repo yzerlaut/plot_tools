@@ -2,7 +2,7 @@ import matplotlib.pylab as plt
 import matplotlib as mpl
 import numpy as np
 
-from .inset import inset
+from inset import inset
 
 def bar_legend(stuff,
                X = None, continuous=False,
