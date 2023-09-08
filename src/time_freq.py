@@ -6,7 +6,6 @@ from .adjust_plots import set_plot
 from .annotations import draw_bar_scales
 from .legend import legend
 
-
 def time_freq(t, freqs, coefs,
               ax=None, Tbar=0.1,
               ax_args=dict(ylabel='freq. (Hz)')):
@@ -27,8 +26,8 @@ def time_freq(t, freqs, coefs,
 
 def time_freq_signal(t, freqs, data, coefs,
                      xlabel='time (s)',
-                     signal_label='data (unit)',
-                     envelope_label='env. (unit)',
+                     unit='unit',
+                     freq_scale = 'lin',
                      fig_args=dict(axes_extents=[[[4,1],[1,1]],
                                                  [[4,2],[1,2]]],
                                    hspace=0.3, wspace=0.2,
@@ -39,12 +38,15 @@ def time_freq_signal(t, freqs, data, coefs,
     AX[0][1].axis('off')
     
     AX[0][0].plot(t, data)
-    set_plot(AX[0][0], ['left'], ylabel=signal_label, xlim=[t[0], t[-1]])
+    set_plot(AX[0][0], ['left'], 
+             ylabel='(%s)' % unit,
+             xlim=[t[0], t[-1]])
     
     # # time frequency power plot
     c = AX[1][0].contourf(t, freqs, coefs, cmap='PRGn')
     set_plot(AX[1][0], ylabel='frequency (Hz)', 
              ylim=[freqs[0], freqs[-1]],
+             yscale=freq_scale,
              xlim=[t[0], t[-1]], xlabel=xlabel)
 
     # # mean power plot over intervals
@@ -54,7 +56,8 @@ def time_freq_signal(t, freqs, data, coefs,
     AX[1][1].plot(np.abs(coefs).max(axis=1), freqs,\
                   label='max.', color='tab:red')
     set_plot(AX[1][1], ['bottom'],
-             xlabel=envelope_label,
+             xlabel=' env. (%s)' % unit,
+             yscale=freq_scale,
              ylim=[freqs[0], freqs[-1]])
     AX[1][1].legend(loc=(0.1,1.1))
     
@@ -77,10 +80,11 @@ if __name__=='__main__':
 
     # Continuous Wavelet Transform analysis
     freqs = np.linspace(1, 90, 40)
+    # freqs = np.logspace(0, 2, 20)
     coefs = my_cwt(data, freqs, dt)
 
     # fig, ax = time_freq(t, freqs, coefs)    
-    fig, AX = time_freq_signal(t, freqs, data, coefs)    
+    fig, AX = time_freq_signal(t, freqs, data, coefs, freq_scale='lin')    
 
     plt.show()
 
