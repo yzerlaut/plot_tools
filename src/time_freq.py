@@ -67,8 +67,11 @@ if __name__=='__main__':
 
 
     import sys
-    sys.path.append('../../')
-    from analyz.freq_analysis.wavelet_transform import my_cwt # continuous wavelet transform
+    # sys.path.append('../../')
+    # from analyz.freq_analysis.wavelet_transform import my_cwt # continuous wavelet transform
+    sys.path.append('../utils/')
+    sys.path.append('../src/')
+    from wavelet_transform import my_cwt # continuous wavelet transform
     
     dt, tstop = 1e-4, 1.
     t = np.arange(int(tstop/dt))*dt
