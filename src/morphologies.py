@@ -1,9 +1,12 @@
+import numpy as np
+
 import matplotlib.pylab as plt
 import matplotlib.animation as animation
 from matplotlib.collections import LineCollection, PatchCollection
 import matplotlib.patches as mpatches
 
 from .annotations import draw_bar_scales
+from .colors import viridis_r
 
 class nrnvyz:
 
@@ -239,19 +242,19 @@ if __name__=='__main__':
     #                                            fig, ax,
     #                                            polar_angle=args.polar_angle, azimuth_angle=args.azimuth_angle)
 
-    vis = nrnvyz(SEGMENTS,
-                 polar_angle=args.polar_angle,
-                 azimuth_angle=args.azimuth_angle)
+    # vis = nrnvyz(SEGMENTS,
+                 # polar_angle=args.polar_angle,
+                 # azimuth_angle=args.azimuth_angle)
 
-    if args.without_axon:
-        fig, ax = vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'))
-        fig.suptitle(args.filename.split(os.path.sep)[-1].split('.')[0])
-    else:
-        fig, ax = vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'),
-                                    color='tab:red',
-                                    bar_scale_args=None)
-        ax.annotate('dendrite', (0,0), xycoords='axes fraction', color='tab:red')
-        vis.plot_segments(ax=ax, cond=(SEGMENTS['comp_type']=='axon'))
-        fig.suptitle(args.filename.split(os.path.sep)[-1].split('.')[0])
+    # if args.without_axon:
+        # fig, ax = vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'))
+        # fig.suptitle(args.filename.split(os.path.sep)[-1].split('.')[0])
+    # else:
+        # fig, ax = vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'),
+                                    # color='tab:red',
+                                    # bar_scale_args=None)
+        # ax.annotate('dendrite', (0,0), xycoords='axes fraction', color='tab:red')
+        # vis.plot_segments(ax=ax, cond=(SEGMENTS['comp_type']=='axon'))
+        # fig.suptitle(args.filename.split(os.path.sep)[-1].split('.')[0])
 
-    pt.plt.show()
+    # pt.plt.show()
