@@ -12,10 +12,14 @@ def single_curve(ax, x, y, sy,
     ax.plot(x, y, color=color, lw=lw, label=label, linestyle=ls, marker=m, ms=ms, alpha=alpha)
     # then errorbars if needed:
     if (sy1 is not None) and (sy2 is not None) :
-        ax.fill_between(x, y-sy1, y+sy2,
+        ax.fill_between(x, 
+                        np.array(y)-np.array(sy1), 
+                        np.array(y)+np.array(sy2),
                         color=color, lw=0, alpha=alpha_std)
     elif (sy is not None):
-        ax.fill_between(x, y-sy, y+sy,
+        ax.fill_between(x, 
+                        np.array(y)-np.array(sy), 
+                        np.array(y)+np.array(sy),
                         color=color, lw=0, alpha=alpha_std)
 
 def multicolored_line(x, y, norm_color_value,
@@ -58,11 +62,15 @@ def multiple_curves(ax, X, Y, sY, COLORS, LABELS,
     # then errorbars if needed:
     if (sY1 is not None) and (sY2 is not None) :
         for x, y, sy1, sy2, c in zip(X, Y, sY1, sY2, COLORS):
-            ax.fill_between(x, y-sy1, y+sy2,
+            ax.fill_between(x, 
+                            np.array(y)-np.array(sy1), 
+                            np.array(y)+np.array(sy2),
                             color=c, lw=0, alpha=alpha_std)
     elif (sY is not None):
         for x, y, sy, c in zip(X, Y, sY, COLORS):
-            ax.fill_between(x, y-sy, y+sy,
+            ax.fill_between(x,
+                            np.array(y)-np.array(sy), 
+                            np.array(y)+np.array(sy),
                             color=c, lw=0, alpha=alpha_std)
 
 def plot(x=None, y=None, sy=None, sy1=None, sy2=None, color='k',
