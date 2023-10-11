@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pylab as plt
 from matplotlib.figure import Figure
 
+from .inset import inset
+
 def annotate(stuff, s, xy,
              xycoords='axes fraction',
              bold=False, italic=False,
@@ -29,45 +31,45 @@ def annotate(stuff, s, xy,
                        color=color, rotation=rotation, ha=ha, va=va,
                        clip_on=clip_on)
 
-# def arrow(stuff,
-          # rect = [0.1, 0.1, 0.7, 0.],
-          # width=.02,
-          # head_width=0.15, head_length=0.02,
-          # width_margin=0., height_margin=0.1,
-          # shape='full',
-          # color='k'):
+def arrow(stuff,
+          rect = [0.1, 0.1, 0.7, 0.],
+          width=.02,
+          head_width=0.15, head_length=0.02,
+          width_margin=0., height_margin=0.1,
+          shape='full',
+          color='k'):
     
-    # [x0,y0, dx, dy] = rect
+    [x0,y0, dx, dy] = rect
 
-    # if (dx==0) and width_margin==0:
-        # width_margin, height_margin = height_margin, 0
+    if (dx==0) and width_margin==0:
+        width_margin, height_margin = height_margin, 0
         
-    # if type(stuff)==Figure: # if figure, we create an axis
-        # if (dy<0) and (dx<0):
-            # sax = graph.inset(stuff,
-                              # [x0+dx-width_margin, y0+dy-height_margin,
-                               # -dx+2*width_margin,-dy+2*height_margin])
-        # elif (dx<0):
-            # sax = graph.inset(stuff,
-                              # [x0+dx-width_margin, y0-height_margin,
-                               # -dx+2*width_margin,dy+2*height_margin])
-        # elif (dy<0):
-            # sax = graph.inset(stuff,
-                              # [x0-width_margin, y0+dy-height_margin,
-                               # dx+2*width_margin,-dy+2*height_margin])
-        # else:
-            # sax = graph.inset(stuff,
-                              # [x0-width_margin, y0-height_margin,
-                               # dx+2*width_margin,dy+2*height_margin])
-        # sax.axis('off')
-    # else: # means subplot
-        # sax = stuff
+    if type(stuff)==Figure: # if figure, we create an axis
+        if (dy<0) and (dx<0):
+            sax = inset(stuff,
+                              [x0+dx-width_margin, y0+dy-height_margin,
+                               -dx+2*width_margin,-dy+2*height_margin])
+        elif (dx<0):
+            sax = inset(stuff,
+                              [x0+dx-width_margin, y0-height_margin,
+                               -dx+2*width_margin,dy+2*height_margin])
+        elif (dy<0):
+            sax = inset(stuff,
+                              [x0-width_margin, y0+dy-height_margin,
+                               dx+2*width_margin,-dy+2*height_margin])
+        else:
+            sax = inset(stuff,
+                              [x0-width_margin, y0-height_margin,
+                               dx+2*width_margin,dy+2*height_margin])
+        sax.axis('off')
+    else: # means subplot
+        sax = stuff
         
-    # sax.arrow(x0, y0, dx, dy,
-              # length_includes_head=True,
-              # width=width, shape=shape,
-              # head_width=head_width, head_length=head_length,
-              # facecolor=color, edgecolor=color, clip_on=False)
+    sax.arrow(x0, y0, dx, dy,
+              length_includes_head=True,
+              width=width, shape=shape,
+              head_width=head_width, head_length=head_length,
+              facecolor=color, edgecolor=color, clip_on=False)
     
 def from_pval_to_star(p,
                       threshold1=1e-3,
@@ -217,8 +219,9 @@ def draw_bar_scales(ax,
 if __name__=='__main__':
 
     import sys
-    sys.path.append('./')
-    from datavyz import graph_env_manuscript as ge
+    sys.path.append('..')
+    import plot_tools as pt
+    import matplotlib.pylab as plt
 
     x = 32.23545345e-5
     print(sci_str(x, rounding=2))
@@ -227,16 +230,17 @@ if __name__=='__main__':
         print(int_to_roman(i))
 
     
-    fig, AX= ge.figure(axes=(10,1), figsize=(.7,.7), bottom=1.5)
+    fig, AX= pt.figure(axes=(10,1), figsize=(.7,.7), bottom=1.5)
     for i, ax in enumerate(AX):
         # ge.top_left_letter(ax, ge.int_to_roman(i+1))
-        ge.matrix(np.random.randn(10,10), ax=ax)
+        # pt.matrix(np.random.randn(10,10), ax=ax)
+        pass
 
-    sax = ge.arrow(fig, [0.04, .2, .93, 0.])
-    ge.annotate(fig, 'time', (.5, .17), ha='center')
+    sax = pt.arrow(fig, [0.04, .2, .93, 0.])
+    # ge.annotate(fig, 'time', (.5, .17), ha='center')
 
     # ge.savefig(fig, 'docs/annotations1.png')
-    ge.show()
+    plt.show()
     
     # from datavyz..graphs import *
     # fig, ax = figure()
