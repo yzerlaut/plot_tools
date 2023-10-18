@@ -212,13 +212,13 @@ def show_animated_time_varying_trace(t, Quant0, SEGMENT_LIST,
 
 if __name__=='__main__':
 
-    import argparse
+    import argparse, os
     # First a nice documentation 
     parser=argparse.ArgumentParser(description=""" 
          Plots a 2D representation of the morphological reconstruction of a single cell
          """,formatter_class=argparse.RawTextHelpFormatter)
     
-    parser.add_argument("filename", help="SWC filename", type=str, default='')
+    # parser.add_argument("filename", help="SWC filename", type=str, default='')
 
     parser.add_argument("-lw", "--linewidth",help="", type=float, default=0.2)
     parser.add_argument("-ac", "--axon_color",help="", default='r')
@@ -229,10 +229,18 @@ if __name__=='__main__':
     
     args = parser.parse_args()
 
-    # print('[...] loading morphology')
-    # morpho = nrn.Morphology.from_swc_file(args.filename)
-    # print('[...] creating list of compartments')
-    # SEGMENTS = nrn.morpho_analysis.compute_segments(morpho)
+    """
+    EXECUTE WITH: python -m src.morphologies
+
+    # to create the 'segments.npy' file, need the *neural_network_dynamics* library
+    print('[...] loading morphology')
+    morpho = nrn.Morphology.from_swc_file(args.filename)
+    print('[...] creating list of compartments')
+    SEGMENTS = nrn.morpho_analysis.compute_segments(morpho)
+    np.save('segments.npy', SEGMENTS)
+    """
+
+    SEGMENTS = np.load('segments.npy', allow_pickle=True).item()
 
     # if args.movie_demo:
     #     t = np.arange(100)*1e-3
@@ -242,19 +250,22 @@ if __name__=='__main__':
     #                                            fig, ax,
     #                                            polar_angle=args.polar_angle, azimuth_angle=args.azimuth_angle)
 
-    # vis = nrnvyz(SEGMENTS,
-                 # polar_angle=args.polar_angle,
-                 # azimuth_angle=args.azimuth_angle)
+    vis = nrnvyz(SEGMENTS,
+                 polar_angle=args.polar_angle,
+                 azimuth_angle=args.azimuth_angle)
 
-    # if args.without_axon:
-        # fig, ax = vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'))
-        # fig.suptitle(args.filename.split(os.path.sep)[-1].split('.')[0])
-    # else:
-        # fig, ax = vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'),
-                                    # color='tab:red',
-                                    # bar_scale_args=None)
-        # ax.annotate('dendrite', (0,0), xycoords='axes fraction', color='tab:red')
-        # vis.plot_segments(ax=ax, cond=(SEGMENTS['comp_type']=='axon'))
-        # fig.suptitle(args.filename.split(os.path.sep)[-1].split('.')[0])
+    fig, AX = plt.subplots(1, 3, figsize=(7,2))
 
-    # pt.plt.show()
+    # dendrites and soma
+    vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'), ax=AX[0], color='tab:red')
+    AX[0].annotate('soma+dendrites', (0,0), xycoords='axes fraction', color='tab:red')
+    # axon only
+    vis.plot_segments(cond=(SEGMENTS['comp_type']=='axon'), ax=AX[1], color='tab:blue')
+    AX[1].annotate('axon only', (0,0), xycoords='axes fraction', color='tab:blue')
+    # both dendrites and axon
+    vis.plot_segments(cond=(SEGMENTS['comp_type']=='axon'), ax=AX[2], color='tab:blue')
+    AX[2].annotate('axon', (0,0), xycoords='axes fraction', color='tab:blue')
+    vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'), ax=AX[2], color='tab:red')
+    AX[2].annotate('soma+dendrites', (0,0), xycoords='axes fraction', color='tab:red')
+
+    plt.show()
