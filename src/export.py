@@ -9,7 +9,7 @@ from matplotlib.figure import Figure
 try:
     import svgutils.compose as sg # SVG
 except ModuleNotFoundError:
-    print(' /!\  "svgutils" not installed ! get it with: "pip install svgutils" ')
+    pass
 
 # import fpdf # PDF
 from PIL import Image # BITMAP (png, jpg, ...)
