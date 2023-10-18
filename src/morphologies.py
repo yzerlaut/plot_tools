@@ -240,6 +240,9 @@ if __name__=='__main__':
     np.save('segments.npy', SEGMENTS)
     """
 
+    import utils.plot_tools as pt
+    import matplotlib.pylab as plt
+
     SEGMENTS = np.load('segments.npy', allow_pickle=True).item()
 
     # if args.movie_demo:
@@ -250,12 +253,11 @@ if __name__=='__main__':
     #                                            fig, ax,
     #                                            polar_angle=args.polar_angle, azimuth_angle=args.azimuth_angle)
 
-    vis = nrnvyz(SEGMENTS,
+    vis = pt.nrnvyz(SEGMENTS,
                  polar_angle=args.polar_angle,
                  azimuth_angle=args.azimuth_angle)
 
     fig, AX = plt.subplots(1, 3, figsize=(7,2))
-
     # dendrites and soma
     vis.plot_segments(cond=(SEGMENTS['comp_type']!='axon'), ax=AX[0], color='tab:red')
     AX[0].annotate('soma+dendrites', (0,0), xycoords='axes fraction', color='tab:red')
