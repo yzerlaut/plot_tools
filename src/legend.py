@@ -3,6 +3,7 @@ import matplotlib as mpl
 import numpy as np
 
 from .inset import inset
+from .adjust_plots import set_ticks_to_log10_axis
 
 def bar_legend(stuff,
                X = None, continuous=False,
@@ -52,7 +53,7 @@ def bar_legend(stuff,
     bar_legend_args['labelpad'] = labelpad
     bar_legend_args['size'] = size
         
-    set_bar_legend(ax_colorbar, cb, **bar_legend_args)
+    # set_bar_legend(ax_colorbar, cb, **bar_legend_args)
     
     return cb, ax_colorbar 
 
@@ -107,7 +108,7 @@ def build_bar_legend(ax_cb, X, mymap,
     if scale=='linear':
         if bounds is None:
             try:
-                bounds = [X[0]+(X[1]-X[0])/2., X[-1]+(X[1]-X[0])/2.]
+                bounds = [X[0]-(X[1]-X[0])/2., X[-1]+(X[1]-X[0])/2.]
             except IndexError:
                 bounds = [X[0], X[0]+1]
                 
@@ -130,7 +131,6 @@ def build_bar_legend(ax_cb, X, mymap,
         cb.set_ticks(X)
         if ticks_labels is not None:
             cb.set_ticklabels(ticks_labels)
-        
     return cb
 
 def build_bar_legend_continuous(ax_cb, mymap,
@@ -160,17 +160,18 @@ def build_bar_legend_continuous(ax_cb, mymap,
                 
             if orientation=='vertical':
                 set_ticks_to_log10_axis(cb.ax.yaxis, bounds, normed_to_unit=True)
-                # if ticks_labels is not None:
-                #     cb.ax.yaxis.set_ticklabels(ticks_labels)
+                if ticks_labels is not None:
+                    cb.ax.yaxis.set_ticklabels(ticks_labels)
             elif orientation=='horizontal':
                 set_ticks_to_log10_axis(cb.ax.xaxis, bounds, normed_to_unit=True)
-                # if ticks_labels is not None:
-                #     cb.ax.xaxis.set_ticklabels(ticks_labels)
+                if ticks_labels is not None:
+                    cb.ax.xaxis.set_ticklabels(ticks_labels)
             
         else:
             
             if ticks is None:
-                ticks = np.linspace(bounds[0]+.1*(bounds[1]-bounds[0]), bounds[1]-.1*(bounds[1]-bounds[0]), 3)
+                ticks = np.linspace(bounds[0]+.1*(bounds[1]-bounds[0]),
+                                    bounds[1]-.1*(bounds[1]-bounds[0]), 3)
                 
             if ticks_labels is None:
                 ticks_labels = ['%.1f' % t for t in ticks]
@@ -220,10 +221,10 @@ if __name__=='__main__':
     
     fig, ax = pt.figure(right=5.) # with extended right space
     
-    for i in range(2):
-        ax.plot(np.arange(10)*10, np.exp(np.random.randn(10)), 'o', ms=2, label='line'+str(i+1))
-    for i in range(2):
-        ax.plot(np.arange(10)*10, np.exp(np.random.randn(10)), '-', label='line'+str(i+1))
+    # for i in range(2):
+        # ax.plot(np.arange(10)*10, np.exp(np.random.randn(10)), 'o', ms=2, label='line'+str(i+1))
+    # for i in range(2):
+        # ax.plot(np.arange(10)*10, np.exp(np.random.randn(10)), '-', label='line'+str(i+1))
         
     # pt.legend(ax, ncol=2)
         
@@ -235,13 +236,17 @@ if __name__=='__main__':
     
     pt.bar_legend(fig,
                   X = np.arange(5),
+                  # ticks = np.arange(5),
+                  # ticks_labels = ['%i'% s for s in np.arange(5)],
                   # inset={'rect':[.3,.8,.3,.05]},
                   colormap=pt.copper,
-                  orientation='horizontal',
-                  label='Trial ID', no_ticks=True)
+                  # orientation='horizontal',
+                  # no_ticks=True,
+                  label='Trial ID')
     
-    pt.bar_legend(fig,
-                  bounds = [1e-3, 10],
-                  scale='log',
-                  label='scale')
-    pt.show()
+    # pt.bar_legend(fig,
+                  # bounds = [1e-3, 10],
+                  # scale='log',
+                  # label='scale')
+
+    pt.plt.show()
