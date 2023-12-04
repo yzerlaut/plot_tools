@@ -1,6 +1,7 @@
 import matplotlib.pylab as plt
 import matplotlib as mpl
 import numpy as np
+from matplotlib.ticker import MaxNLocator, NullFormatter
 
 from .inset import inset
 from .adjust_plots import set_ticks_to_log10_axis
@@ -53,7 +54,7 @@ def bar_legend(stuff,
     bar_legend_args['labelpad'] = labelpad
     bar_legend_args['size'] = size
         
-    # set_bar_legend(ax_colorbar, cb, **bar_legend_args)
+    set_bar_legend(ax_colorbar, cb, **bar_legend_args)
     
     return cb, ax_colorbar 
 
@@ -102,7 +103,7 @@ def build_bar_legend(ax_cb, X, mymap,
     
     """ X -> ticks """
     if color_discretization is None:
-        color_discretization = len(X)
+        color_discretization = len(X)+1
         
     # scale : 'linear' / 'log' / 'custom'
     if scale=='linear':
@@ -111,7 +112,6 @@ def build_bar_legend(ax_cb, X, mymap,
                 bounds = [X[0]-(X[1]-X[0])/2., X[-1]+(X[1]-X[0])/2.]
             except IndexError:
                 bounds = [X[0], X[0]+1]
-                
         bounds = np.linspace(bounds[0], bounds[1], color_discretization)
     elif scale=='log10':
         if bounds is None:
@@ -131,6 +131,7 @@ def build_bar_legend(ax_cb, X, mymap,
         cb.set_ticks(X)
         if ticks_labels is not None:
             cb.set_ticklabels(ticks_labels)
+    cb.set_ticks([], minor=True) # no minor ticks
     return cb
 
 def build_bar_legend_continuous(ax_cb, mymap,
