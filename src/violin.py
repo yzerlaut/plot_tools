@@ -54,8 +54,9 @@ def violin(data,
 
 if __name__=='__main__':
 
-    import sys
-    sys.path.append('./')
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
 
     data = np.random.randn(100)#, 4)
     #plotting

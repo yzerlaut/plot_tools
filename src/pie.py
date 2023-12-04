@@ -85,8 +85,9 @@ def pie(data,
 
 if __name__=='__main__':
     
-    import sys
-    sys.path.append('./')
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
 
     data = .5+np.abs(np.random.randn(3))*.4
 

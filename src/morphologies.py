@@ -212,6 +212,11 @@ def show_animated_time_varying_trace(t, Quant0, SEGMENT_LIST,
 
 if __name__=='__main__':
 
+
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
+
     import argparse, os
     # First a nice documentation 
     parser=argparse.ArgumentParser(description=""" 

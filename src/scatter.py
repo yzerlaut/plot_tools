@@ -127,6 +127,10 @@ def multiple_curves(ax, X, Y, sX, sY, COLORS, LABELS,
 
 
 if __name__=='__main__':
+
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
     
     scatter(np.arange(20),
             np.random.randn(20),

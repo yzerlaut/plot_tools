@@ -65,6 +65,9 @@ def time_freq_signal(t, freqs, data, coefs,
 
 if __name__=='__main__':
 
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
 
     import sys
     # sys.path.append('../../')

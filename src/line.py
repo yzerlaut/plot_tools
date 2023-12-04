@@ -138,7 +138,11 @@ def plot(x=None, y=None, sy=None, sy1=None, sy2=None, color='k',
     return fig, ax
 
 if __name__=='__main__':
-    
+
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
+ 
     plot(Y=3*np.random.randn(4,10),
          sY=np.random.randn(4,10),
          ls=':', m='o', ms=0.1, lw=0.4,

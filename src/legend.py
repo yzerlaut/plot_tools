@@ -212,39 +212,36 @@ def legend(ax,
 
 if __name__=='__main__':
 
-    import sys
-    sys.path.append('./')
-    from datavyz import graph_env_manuscript as ge
-    import sys, os
-    sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),os.path.pardir))
-    from datavyz import graph_env_manuscript as ge
+    import sys, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
 
     Y = [np.exp(np.random.randn(100)) for i in range(4)]
     
-    fig, ax = ge.figure(right=5.) # with extended right space
+    fig, ax = pt.figure(right=5.) # with extended right space
     
     for i in range(2):
         ax.plot(np.arange(10)*10, np.exp(np.random.randn(10)), 'o', ms=2, label='line'+str(i+1))
     for i in range(2):
         ax.plot(np.arange(10)*10, np.exp(np.random.randn(10)), '-', label='line'+str(i+1))
         
-    ge.legend(ax, ncol=2)
+    # pt.legend(ax, ncol=2)
         
-    ge.plot(Y=Y,
+    pt.plot(Y=Y,
             xlabel='time', ylabel='y-value',
-            colormap=ge.copper,
+            colormap=pt.copper,
             lw=1., ax=ax)
 
     
-    ge.bar_legend(fig,
+    pt.bar_legend(fig,
                   X = np.arange(5),
                   # inset={'rect':[.3,.8,.3,.05]},
-                  colormap=ge.copper,
+                  colormap=pt.copper,
                   orientation='horizontal',
                   label='Trial ID', no_ticks=True)
     
-    ge.bar_legend(fig,
+    pt.bar_legend(fig,
                   bounds = [1e-3, 10],
                   scale='log',
                   label='scale')
-    ge.show()
+    pt.show()

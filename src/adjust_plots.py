@@ -314,6 +314,10 @@ def set_common_ylims(AX, lims=None):
 
 if __name__=='__main__':
 
+    import sys, os, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
+
     import matplotlib.pylab as plt
     
     fig, ax = plt.subplots(1)

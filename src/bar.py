@@ -122,6 +122,10 @@ def unrelated_samples_two_conditions_comparison(graph,
 
 if __name__=='__main__':
 
+    import sys, os, pathlib
+    sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+    import plot_tools as pt
+
 
     # fig1, _ = ge.unrelated_samples_two_conditions_comparison(\
     #     np.random.randn(10)+1.4, np.random.randn(12)+1.4,
