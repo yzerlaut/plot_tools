@@ -2,15 +2,15 @@ import numpy as np
 import matplotlib.pylab as plt
 
 def violin(data,
-           X=None,
+           x=0, 
            ax=None,
-           COLORS=None,
-           showmeans=True,
-           showextrema=False,
-           showmedians=False,
+           color='tab:blue',
+           show_mean=True,
+           show_extrema=False,
+           show_median=False,
            quantiles=[0.25, 0.5, 0.75],
            points=100,
-           title='',
+           ms=1,
            figsize=(1.5, 1),
            legend=None):
 
@@ -19,10 +19,6 @@ def violin(data,
     """
 
     data = np.array(data)
-    if (X is None) and (len(data.shape)>1):
-        X = np.arange(data.shape[1])
-    elif (X is None):
-        X = [0]
 
     # getting or creating the axis
     if ax is None:
@@ -30,24 +26,21 @@ def violin(data,
     else:
         fig = plt.gcf()
 
-    if showmeans:
-        ax.plot(X, np.array(data.mean(axis=0)), 'ko', ms=1)
+    if show_mean:
+        ax.plot([x], [data.mean()], 'o', ms=ms, color=color)
+
     violin_parts = ax.violinplot(data,
-                                 positions=X,
-                                 quantiles=[quantiles for i in range(len(X))],
-                                 showextrema=False,
-                                 showmedians=showmedians,
+                                 positions=[x],
+                                 quantiles=[quantiles],
+                                 showextrema=show_extrema,
+                                 showmedians=show_median,
                                  points=points)
 
-    if COLORS is not None:
-        for pc, color in zip(violin_parts['bodies'], COLORS):
-            pc.set_facecolor(color)
-            pc.set_edgecolor('black')
+    for pc, color in zip(violin_parts['bodies'], [color]):
+        pc.set_facecolor(color)
+        pc.set_edgecolor('black')
 
     violin_parts['cquantiles'].set_linewidth(0.5)
-
-    if title!='':
-        ax.set_title(title)
 
     return fig, ax
 
@@ -58,9 +51,8 @@ if __name__=='__main__':
     sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
     import plot_tools as pt
 
-    data = np.random.randn(100)#, 4)
     #plotting
-    fig, ax = violin(data, COLORS=[plt.cm.tab10(i) for i in range(4)])
-    data = np.random.randn(100)#, 4)
-    violin(data, X=[1], COLORS=[plt.cm.tab10(2)], ax=ax, points=1000)
+    fig, ax = pt.figure()
+    violin(np.random.randn(100), x=0, color=plt.cm.tab10(1), ax=ax, points=1000)
+    violin(np.random.randn(100)+1, x=1, color=plt.cm.tab10(2), ax=ax, points=1000)
     plt.show()
