@@ -13,7 +13,7 @@ except ModuleNotFoundError:
 
 # import fpdf # PDF
 from PIL import Image # BITMAP (png, jpg, ...)
-### /!\ need to have the inkscape 
+### [!!] need to have the inkscape 
 
 def mm2inch(x):
     return x/25.4
