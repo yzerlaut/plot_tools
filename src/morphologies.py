@@ -24,7 +24,7 @@ class nrnvyz:
     def coordinate_projection(self,
                               x, y, z):
         """
-        /!\
+        [!!]
         need to do this propertly, not working yet !!
         """
         x = np.cos(self.polar_angle)*(x-self.x0)+np.sin(self.polar_angle)*(y-self.y0)

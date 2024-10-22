@@ -194,10 +194,10 @@ def adjust_spines(ax, spines, tck_outward=3, tck_length=4.,
 def find_good_log_ticks(lim=[0.009, 0.0099]):
     
     if lim[0]<=0:
-        print('[!!] need positive lower bound of graphs, set to 1e-3')
+        print(' [!!] need positive lower bound of graphs, set to 1e-3')
         lim[0] = 1e-3
     if lim[1]<=0:
-        print('[!!] need positive lower bound of graphs, set to 10')
+        print(' [!!] need positive lower bound of graphs, set to 10')
         lim[1] = 10
 
     minorticks, majorticks = [], []
