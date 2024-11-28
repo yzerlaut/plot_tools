@@ -15,6 +15,7 @@ from .src.bar import bar
 from .src.scatter import scatter
 from .src.time_freq import time_freq, time_freq_signal
 from .src.morphologies import nrnvyz
+from .src.surface import twoD_plot, matrix
 
 def set_style(label='manuscript'):
     """
