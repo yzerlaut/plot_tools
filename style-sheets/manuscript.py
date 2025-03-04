@@ -6,6 +6,8 @@ figure.titlesize: 8
 # figure.titleweight: bold
 figure.autolayout: False # When True, automatically adjust subplot
 
+savefig.transparent: True # transparent background
+
 ### LINE
 lines.linewidth: 1
 
