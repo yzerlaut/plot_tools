@@ -7,6 +7,7 @@ figure.titlesize: 8
 figure.autolayout: False # When True, automatically adjust subplot
 
 savefig.transparent: True # transparent background
+svg.fonttype: none # How to handle SVG fonts: as *text* not path
 
 ### LINE
 lines.linewidth: 1
