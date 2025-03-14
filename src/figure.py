@@ -181,6 +181,25 @@ def figure(axes = (1,1),
         return fig, AX
 
 
+def save(fig, 
+         on='Desktop', 
+         fig_name='fig.svg',
+         transparent=True,
+         dpi='figure'):
+    """
+    - on:
+        default from $HOME directory, e.g. on='Desktop/temp', saves as '~/Desktop/temp/fig.svg'
+        otherwise relative path, e.g. on='./temp', saves as './temp/fig.svg'
+    """
+    
+    if on[0]=='.':
+        path = os.path.join(*os.path.split(on), fig_name)
+    else:
+        path = os.path.join(os.path.expanduser('~'), *os.path.split(on), fig_name)
+  
+    fig.savefig(path, transparent=transparent, dpi=dpi)
+
+
 if __name__=='__main__':
 
     import sys, pathlib
