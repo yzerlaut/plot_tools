@@ -64,7 +64,7 @@ def figure(axes = (1,1),
            axes_extents=None,
            grid=None,
            figsize=(1.,1.),
-           page=None,
+           page=None, dpi=75,
            left=1., right=1.,
            bottom=1., top=1.,
            wspace=1., hspace=1.,
@@ -131,7 +131,7 @@ def figure(axes = (1,1),
 
     if page=='A4':
 
-        fig = plt.figure(figsize=(8.27, 11.69), dpi=80)
+        fig = plt.figure(figsize=(8.27, 11.69), dpi=dpi)
         plt.subplots_adjust(left=left*fig.subplotpars.left,
                             bottom=bottom*fig.subplotpars.bottom,
                             top=1-(top*(1-fig.subplotpars.top)),
