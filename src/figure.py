@@ -64,6 +64,7 @@ def figure(axes = (1,1),
            axes_extents=None,
            grid=None,
            figsize=(1.,1.),
+           page=None,
            left=1., right=1.,
            bottom=1., top=1.,
            wspace=1., hspace=1.,
@@ -109,16 +110,9 @@ def figure(axes = (1,1),
         x_plots = np.max([g[0]+g[2] for g in grid])
         y_plots = np.max([g[1]+g[3] for g in grid])
 
-        dim =  dimension_calculus(figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+        dim =  dimension_calculus(figsize, 
+                left, right, bottom, top, wspace, hspace, x_plots, y_plots)
 
-        fig = plt.figure(figsize=(mm2inch(dim['full_width']),
-                                  mm2inch(dim['full_height'])))
-        for g in grid:
-            ax = plt.subplot2grid((y_plots, x_plots),
-                                  (g[1], g[0]),
-                                  colspan=g[2],
-                                  rowspan=g[3])
-            AX.append(ax)
     else:
         if axes_extents is not None:
             if type(axes_extents) is tuple:
@@ -132,10 +126,32 @@ def figure(axes = (1,1),
         y_plots = np.sum([axes_extents[i][0][1] \
                           for i in range(len(axes_extents))])
 
-        dim =  dimension_calculus(figsize,left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+        dim =  dimension_calculus(figsize,
+                left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+
+    if page=='A4':
+
+        fig = plt.figure(figsize=(8.27, 11.69), dpi=80)
+        plt.subplots_adjust(left=left*fig.subplotpars.left,
+                            bottom=bottom*fig.subplotpars.bottom,
+                            top=1-(top*(1-fig.subplotpars.top)),
+                            right=1-(right*(1-fig.subplotpars.right)),
+                            wspace=wspace*fig.subplotpars.wspace,
+                            hspace=hspace*fig.subplotpars.hspace)
+
+    else:
 
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
                                   mm2inch(dim['full_height'])))
+
+    if grid is not None:
+        for g in grid:
+            ax = plt.subplot2grid((y_plots, x_plots),
+                                  (g[1], g[0]),
+                                  colspan=g[2],
+                                  rowspan=g[3])
+            AX.append(ax)
+    else:
 
         j0_row = 0
         for j in range(len(axes_extents)):
@@ -150,7 +166,6 @@ def figure(axes = (1,1),
                 i0_line += axes_extents[j][i][0]
             j0_row += axes_extents[j][i][1]
             AX.append(AX_line)
-
 
     if dim['left']>=(1-dim['right']):
         print('left=%.2f and right=%.2f leads to a too large space' % (dim['left'], dim['right']),
@@ -200,6 +215,8 @@ def save(fig,
   
     fig.savefig(path, transparent=transparent, dpi=dpi)
 
+def show():
+    plt.show()
 
 if __name__=='__main__':
 
@@ -208,9 +225,11 @@ if __name__=='__main__':
     import plot_tools as pt
 
 
-    import sys
-    sys.path.append('./')
+    fig, AX = pt.figure(axes=(4,10), 
+                        hspace=0.2, wspace=0.2, page='A4')
 
+    pt.show()
+    
     # from datavyz import graph_env_manuscript as ge
     # import itertools, string
 

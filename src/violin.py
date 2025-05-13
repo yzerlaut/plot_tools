@@ -52,7 +52,8 @@ if __name__=='__main__':
     import plot_tools as pt
 
     #plotting
-    fig, ax = pt.figure()
+    fig, ax = pt.figure(figsize=(.8,1))
     violin(np.random.randn(100), x=0, color=plt.cm.tab10(1), ax=ax, points=1000)
     violin(np.random.randn(100)+1, x=1, color=plt.cm.tab10(2), ax=ax, points=1000)
+    pt.set_plot(ax, ['left'])
     plt.show()
