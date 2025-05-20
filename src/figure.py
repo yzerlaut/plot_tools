@@ -64,10 +64,11 @@ def figure(axes = (1,1),
            axes_extents=None,
            grid=None,
            figsize=(1.,1.),
-           page=None, dpi=75,
+           page=None, 
            left=1., right=1.,
            bottom=1., top=1.,
            wspace=1., hspace=1.,
+           dpi=75,
            reshape_axes=True):
 
     """
@@ -142,7 +143,8 @@ def figure(axes = (1,1),
     else:
 
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
-                                  mm2inch(dim['full_height'])))
+                                  mm2inch(dim['full_height'])),
+                         dpi=dpi)
 
     if grid is not None:
         for g in grid:
