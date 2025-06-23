@@ -70,6 +70,22 @@ def arrow(stuff,
               width=width, shape=shape,
               head_width=head_width, head_length=head_length,
               facecolor=color, edgecolor=color, clip_on=False)
+
+
+def shaded_window(ax, 
+                  xlim=[0,1],
+                  ylim=None,
+                  alpha=0.5,
+                  color='gray'):
+    
+    if ylim is None:
+        ylim = ax.get_ylim()
+
+    ax.fill_between(xlim, [ylim[0], ylim[0]], [ylim[1], ylim[1]],
+                    color=color, alpha=alpha)
+
+    ax.set_ylim(ylim)
+
     
 def from_pval_to_star(p,
                       threshold1=1e-3,
@@ -184,8 +200,10 @@ def draw_bar_scales(ax,
             
         ax.plot(xyLoc[0]-np.arange(2)*Xbar,xyLoc[1]+np.zeros(2), lw=lw, color=color)
         ax.plot(xyLoc[0]+np.zeros(2),xyLoc[1]+np.arange(2)*Ybar, lw=lw, color=color)
-        ax.annotate(Xbar_label, (xyLoc[0]-Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor), color=xcolor, va='top', ha='right',fontsize=fontsize, annotation_clip=False)
-        ax.annotate(Ybar_label, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor), color=ycolor, va='bottom', ha='left',fontsize=fontsize, annotation_clip=False)
+        ax.annotate(Xbar_label, (xyLoc[0]-Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor), 
+                    color=xcolor, va='top', ha='right',fontsize=fontsize, annotation_clip=False)
+        ax.annotate(Ybar_label, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor), 
+                    color=ycolor, va='bottom', ha='left',fontsize=fontsize, annotation_clip=False)
         if Ybar_label2!='':
             ax.annotate(Ybar_label2+'\n',
                         (xyLoc[0]+Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor),
@@ -198,8 +216,10 @@ def draw_bar_scales(ax,
             
         ax.plot(xyLoc[0]+np.arange(2)*Xbar,xyLoc[1]+np.zeros(2), lw=lw, color=color)
         ax.plot(xyLoc[0]+np.zeros(2),xyLoc[1]+np.arange(2)*Ybar, lw=lw, color=color)
-        ax.annotate(Xbar_label, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor), color=xcolor, va='top', ha='left',fontsize=fontsize, annotation_clip=False)
-        ax.annotate(Ybar_label, (xyLoc[0]-Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor), color=ycolor, va='bottom', ha='right',fontsize=fontsize, annotation_clip=False)
+        ax.annotate(Xbar_label, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor), 
+                    color=xcolor, va='top', ha='left',fontsize=fontsize, annotation_clip=False)
+        ax.annotate(Ybar_label, (xyLoc[0]-Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor), 
+                    color=ycolor, va='bottom', ha='right',fontsize=fontsize, annotation_clip=False)
         if Ybar_label2!='':
             ax.annotate(Ybar_label2+'\n', (xyLoc[0]-Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor),
                         color=ycolor2, va='bottom', ha='right',fontsize=fontsize, annotation_clip=False)
@@ -236,14 +256,13 @@ if __name__=='__main__':
     
     fig, AX= pt.figure(axes=(10,1), figsize=(.7,.7), bottom=1.5)
     for i, ax in enumerate(AX):
-        # ge.top_left_letter(ax, ge.int_to_roman(i+1))
-        # pt.matrix(np.random.randn(10,10), ax=ax)
-        pass
+        pt.annotate(ax, pt.int_to_roman(i+1), (0,1))
+        pt.matrix(np.random.randn(10,10), ax=ax)
 
+    pt.shaded_window(AX[0], xlim=[0.5, 3])
+    
     sax = pt.arrow(fig, [0.04, .2, .93, 0.])
-    # ge.annotate(fig, 'time', (.5, .17), ha='center')
 
-    # ge.savefig(fig, 'docs/annotations1.png')
     plt.show()
     
     # from datavyz..graphs import *
