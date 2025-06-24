@@ -1,5 +1,5 @@
 ### FIGURE
-figure.facecolor: dimgrey
+figure.facecolor: black
 figure.dpi: 150
 figure.figsize: 1.7, 1.3
 figure.titlesize: 7
@@ -31,7 +31,7 @@ font.size: 7
 
 ### AXES
 axes.grid: False
-axes.facecolor: grey
+axes.facecolor: black
 axes.edgecolor: lightgrey
 axes.labelcolor: lightgrey
 axes.titlecolor: lightgrey
