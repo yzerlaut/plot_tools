@@ -24,7 +24,10 @@ def set_style(label='manuscript'):
     if label in ['manuscript', 'default']:
         pylab.style.use(os.path.join(pathlib.Path(__file__).resolve().parent,
                                     'style-sheets', 'manuscript.py'))
-    if label in ['dark']:
+    elif label in ['dark-notebook']:
+        pylab.style.use(os.path.join(pathlib.Path(__file__).resolve().parent,
+                                    'style-sheets', 'dark-notebook.py'))
+    elif label in ['dark']:
         pylab.style.use(os.path.join(pathlib.Path(__file__).resolve().parent,
                                     'style-sheets', 'dark.py'))
     else:

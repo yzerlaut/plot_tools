@@ -11,6 +11,7 @@ svg.fonttype: none # How to handle SVG fonts: as *text* not path
 
 ### LINE
 lines.linewidth: 1
+lines.color: black
 
 ### PATCHES
 patch.facecolor: 0072B2
@@ -21,6 +22,8 @@ legend.fontsize: 8
 ### TICKS
 xtick.direction: out
 ytick.direction: out
+xtick.color: black
+ytick.color: black
 
 ### FONTS
 # font.family: sans-serif
@@ -32,6 +35,9 @@ font.size: 8
 axes.grid: False
 axes.facecolor: white
 axes.linewidth: 1.0
+axes.edgecolor: black 
+axes.labelcolor: black
+axes.titlecolor: black
 axes.titlesize: 8
 # axes.titleweight: bold
 axes.labelsize: 8 
@@ -43,7 +49,8 @@ axes.prop_cycle: cycler('color', ['0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E44
 ### LINES
 lines.markersize: 2.5 # marker size, in points
 
-
+### TEXT
+text.color: black
 
 #### MATPLOTLIBRC FORMAT
 

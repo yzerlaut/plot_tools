@@ -7,7 +7,6 @@ def mm2inch(x):
 
 PROPS = {
     'fontsize':8,
-    'default_color':'k',
     'single_plot_size':(22., 16.), # mm
     'hspace_size':10., # mm
     'wspace_size':14., # mm
@@ -68,7 +67,7 @@ def figure(axes = (1,1),
            left=1., right=1.,
            bottom=1., top=1.,
            wspace=1., hspace=1.,
-           dpi=75,
+           dpi=None,
            reshape_axes=True):
 
     """
@@ -226,6 +225,7 @@ if __name__=='__main__':
     sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
     import plot_tools as pt
 
+    pt.set_style('dark-notebook')
 
     fig, AX = pt.figure(axes=(4,10), 
                         hspace=0.2, wspace=0.2, page='A4')

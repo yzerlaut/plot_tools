@@ -26,7 +26,7 @@ def set_plot(ax,
              xlim_enhancement=.5, ylim_enhancement=.5,
              xlim=None, ylim=None,
              grid=False,
-             xcolor='k', ycolor='k',
+             xcolor=None, ycolor=None,
              fontsize=None, size=None,
              ax_refs=None):
 
@@ -44,7 +44,8 @@ def set_plot(ax,
     # drawing spines
     adjust_spines(ax, spines,
                   tck_outward=tck_outward, tck_length=tck_length,
-                  ycolor=ycolor, xcolor=xcolor)
+                  ycolor= ycolor if (ycolor is not None) else plt.rcParams['axes.edgecolor'],
+                  xcolor= xcolor if (xcolor is not None) else plt.rcParams['axes.edgecolor'])
     
     if yscale=='log':
         ax.set_yscale('log')
@@ -134,13 +135,16 @@ def set_plot(ax,
     if yminor_ticks is not None:
         ax.set_yticks(yminor_ticks, minor=True)
         
-    ax.set_xlabel(xlabel, fontsize=fontsize, color=xcolor,
+    ax.set_xlabel(xlabel, fontsize=fontsize, 
+                  color= xcolor if (xcolor is not None) else plt.rcParams['axes.edgecolor'],
                   labelpad=xlabelpad)
-    ax.set_ylabel(ylabel, fontsize=fontsize, color=ycolor,
+    ax.set_ylabel(ylabel, fontsize=fontsize, 
+                  color= ycolor if (ycolor is not None) else plt.rcParams['axes.edgecolor'],
                   labelpad=ylabelpad)
 
     if title!='':
-        ax.set_title(title, fontsize=fontsize, color=xcolor)
+        ax.set_title(title, fontsize=fontsize, 
+                  color= xcolor if (xcolor is not None) else plt.rcParams['axes.edgecolor'])
     
     if grid:
         ax.grid()
@@ -154,7 +158,7 @@ def ticks_number(ax, xticks=3, yticks=3):
 
         
 def adjust_spines(ax, spines, tck_outward=3, tck_length=4.,
-                  xcolor='k', ycolor='k'):
+                  xcolor=None, ycolor=None):
 
     for loc, spine in ax.spines.items():
         if loc in spines:

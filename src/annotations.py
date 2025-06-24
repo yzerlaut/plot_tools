@@ -82,7 +82,7 @@ def shaded_window(ax,
         ylim = ax.get_ylim()
 
     ax.fill_between(xlim, [ylim[0], ylim[0]], [ylim[1], ylim[1]],
-                    color=color, alpha=alpha)
+                    color=color, alpha=alpha, lw=0)
 
     ax.set_ylim(ylim)
 
@@ -141,7 +141,7 @@ def draw_bar_scales(ax,
                     orientation=None,
                     xyLoc=None, 
                     Xbar_label2='',Ybar_label2='',
-                    color='k', xcolor='k', ycolor='k', ycolor2='grey',
+                    color=None, xcolor=None, ycolor=None, ycolor2='grey',
                     fontsize=8, size='normal',
                     shift_factor=20., lw=1,
                     remove_axis=False):
@@ -174,8 +174,10 @@ def draw_bar_scales(ax,
             
         ax.plot(xyLoc[0]-np.arange(2)*Xbar,xyLoc[1]+np.zeros(2), lw=lw, color=color)
         ax.plot(xyLoc[0]+np.zeros(2),xyLoc[1]-np.arange(2)*Ybar, lw=lw, color=color)
-        ax.annotate(Xbar_label, (xyLoc[0]-Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor), color=xcolor, va='bottom', ha='right',fontsize=fontsize, annotation_clip=False)
-        ax.annotate(Ybar_label, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor), color=ycolor, va='top', ha='left',fontsize=fontsize, annotation_clip=False)
+        ax.annotate(Xbar_label, (xyLoc[0]-Xbar/shift_factor,xyLoc[1]+Ybar/shift_factor), 
+                    color=xcolor, va='bottom', ha='right',fontsize=fontsize, annotation_clip=False)
+        ax.annotate(Ybar_label, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor), 
+                    color=ycolor, va='top', ha='left',fontsize=fontsize, annotation_clip=False)
         if Ybar_label2!='':
             ax.annotate('\n'+Ybar_label2, (xyLoc[0]+Xbar/shift_factor,xyLoc[1]-Ybar/shift_factor),
                         color=ycolor2, va='top', ha='left',fontsize=fontsize, annotation_clip=False)
