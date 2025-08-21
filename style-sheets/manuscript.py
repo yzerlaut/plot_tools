@@ -1,12 +1,15 @@
 ### FIGURE
 figure.facecolor: white
 figure.dpi: 150
-figure.figsize: 1.7, 1.3
-figure.titlesize: 8
-# figure.titleweight: bold
+figure.figsize: 1.5, 1.2 # ratio width/height = 1.25
+figure.titlesize: 7
+figure.subplot.left: 0.3
+figure.subplot.right: 0.95
+figure.subplot.bottom: 0.3
+figure.subplot.top: 0.95
+savefig.transparent: True
 figure.autolayout: False # When True, automatically adjust subplot
 
-savefig.transparent: True # transparent background
 svg.fonttype: none # How to handle SVG fonts: as *text* not path
 
 ### LINE
@@ -17,7 +20,7 @@ lines.color: black
 patch.facecolor: 0072B2
 
 ### LEGEND
-legend.fontsize: 8
+legend.fontsize: 7
 
 ### TICKS
 xtick.direction: out

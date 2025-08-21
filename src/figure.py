@@ -1,68 +1,81 @@
-import os
+import os, tempfile
 import numpy as np
 import matplotlib.pylab as plt
 
 def mm2inch(x):
     return x/25.4
+def inch2mm(x):
+    return x*25.4
 
-PROPS = {
-    'fontsize':8,
-    'single_plot_size':(22., 16.), # mm
-    'hspace_size':10., # mm
-    'wspace_size':14., # mm
-    'left_size':16., # mm
+# DEFAULT AXES PROPS
+AX_PROPS = {
+    'ax_size':(20., 14.), # mm
+    'hspace_size':9., # mm
+    'wspace_size':10., # mm
+    'left_size':13., # mm
     'right_size':4., # mm
-    'top_size':7., # mm
-    'bottom_size':13., # mm
-    'background':'none',
-    'facecolor':'w',
-    'transparency':True,
-    'dpi':150,
-    'markersize':2.5,
-    'linewidth':1,
+    'top_size':5., # mm
+    'bottom_size':10., # mm
 }
 
-class Env:
-
-    def __init__(self):
-        for key in PROPS:
-            setattr(self, key, PROPS[key])
-
-def dimension_calculus(figsize,
+def from_grid_to_subplots_args(Nx, Ny, ax_scale,
                        left, right,
                        bottom, top,
-                       wspace, hspace,
-                       x_plots, y_plots):
+                       wspace, hspace):
     """
     calculate the dimension quantities required by *matplotlib* plt.figure object
     """
-    dimension, cls = {}, Env()
+    dimension = {}
 
     # horizontal
-    dimension['full_width'] = left*figsize[0]*cls.left_size+\
-        right*figsize[0]*cls.right_size+\
-        x_plots*figsize[0]*figsize[0]*cls.single_plot_size[0]+\
-        wspace*(x_plots-1)*figsize[0]*cls.wspace_size
-    dimension['left'] = left*figsize[0]*cls.left_size/dimension['full_width']
-    dimension['right'] = right*figsize[0]*cls.right_size/dimension['full_width']
-    dimension['wspace'] = wspace*figsize[0]*cls.wspace_size/figsize[0]/cls.single_plot_size[0]
+    dimension['full_width'] = left*ax_scale[0]*AX_PROPS['left_size']+\
+        right*ax_scale[0]*AX_PROPS['right_size']+\
+        Nx*ax_scale[0]*ax_scale[0]*AX_PROPS['ax_size'][0]+\
+        wspace*(Nx-1)*ax_scale[0]*AX_PROPS['wspace_size']
+    dimension['left'] = left*ax_scale[0]*AX_PROPS['left_size']/dimension['full_width']
+    dimension['right'] = right*ax_scale[0]*AX_PROPS['right_size']/dimension['full_width']
+    dimension['wspace'] = wspace*ax_scale[0]*AX_PROPS['wspace_size']/ax_scale[0]/AX_PROPS['ax_size'][0]
 
     # vertical
-    dimension['full_height'] = bottom*figsize[1]*cls.bottom_size+\
-        top*figsize[1]*cls.top_size+\
-        y_plots*figsize[1]*cls.single_plot_size[1]+\
-        hspace*figsize[1]*(y_plots-1)*cls.hspace_size
-    dimension['bottom'] = bottom*figsize[1]*cls.bottom_size/dimension['full_height']
-    dimension['top'] = top*figsize[1]*cls.top_size/dimension['full_height']
-    dimension['hspace'] = hspace*figsize[1]*cls.hspace_size/figsize[1]/cls.single_plot_size[1]
+    dimension['full_height'] = bottom*ax_scale[1]*AX_PROPS['bottom_size']+\
+        top*ax_scale[1]*AX_PROPS['top_size']+\
+        Ny*ax_scale[1]*AX_PROPS['ax_size'][1]+\
+        hspace*ax_scale[1]*(Ny-1)*AX_PROPS['hspace_size']
+    dimension['bottom'] = bottom*ax_scale[1]*AX_PROPS['bottom_size']/dimension['full_height']
+    dimension['top'] = top*ax_scale[1]*AX_PROPS['top_size']/dimension['full_height']
+    dimension['hspace'] = hspace*ax_scale[1]*AX_PROPS['hspace_size']/ax_scale[1]/AX_PROPS['ax_size'][1]
 
     return dimension
 
+
+def from_figsize_to_subplots_args(figsize, Nx, Ny,
+                       left, right,
+                       bottom, top,
+                       wspace, hspace):
+    """
+    calculate the dimension quantities required by *matplotlib* plt.figure object
+    """
+    dimension = {}
+
+    # horizontal
+    dimension['full_width'] = inch2mm(figsize[0])
+    dimension['left'] = left*AX_PROPS['left_size']/dimension['full_width']
+    dimension['right'] = right*AX_PROPS['right_size']/dimension['full_width']
+    dimension['wspace'] = wspace*AX_PROPS['wspace_size']/AX_PROPS['ax_size'][0]
+
+    # vertical
+    dimension['full_height'] = inch2mm(figsize[1]) 
+    dimension['bottom'] = bottom*AX_PROPS['bottom_size']/dimension['full_height']
+    dimension['top'] = top*AX_PROPS['top_size']/dimension['full_height']
+    dimension['hspace'] = hspace*AX_PROPS['hspace_size']/AX_PROPS['ax_size'][1]
+
+    return dimension
 
 def figure(axes = (1,1),
            axes_extents=None,
            grid=None,
            figsize=(1.,1.),
+           ax_scale=(1.,1.),
            page=None, 
            left=1., right=1.,
            bottom=1., top=1.,
@@ -71,9 +84,9 @@ def figure(axes = (1,1),
            reshape_axes=True):
 
     """
-    scales figures according to the specification of "settings.py" (for each graph environment)
+    build a figure of axes with constant dimensions (see AX_PROPS above)
 
-    the wspace, hspace, ... values are factor that modulates the wspace0, hspace0
+    the wspace, hspace, ... values are factor that modulates the default values
     -> then use >1 to make bigger, and <1 to make smaller...
 
     Subplots are build with this convention for the geometry:
@@ -107,11 +120,11 @@ def figure(axes = (1,1),
     AX = []
 
     if grid is not None:
-        x_plots = np.max([g[0]+g[2] for g in grid])
-        y_plots = np.max([g[1]+g[3] for g in grid])
+        Nx = np.max([g[0]+g[2] for g in grid])
+        Ny = np.max([g[1]+g[3] for g in grid])
 
-        dim =  dimension_calculus(figsize, 
-                left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+        dim =  from_grid_to_subplots_args(Nx, Ny, ax_scale,
+                            left, right, bottom, top, wspace, hspace)
 
     else:
         if axes_extents is not None:
@@ -121,13 +134,21 @@ def figure(axes = (1,1),
             axes_extents = [[[1,1] for j in range(axes[0])]\
                             for i in range(axes[1])]
 
-        x_plots = np.sum([axes_extents[0][j][0] \
+        Nx = np.sum([axes_extents[0][j][0] \
                           for j in range(len(axes_extents[0]))])
-        y_plots = np.sum([axes_extents[i][0][1] \
+        Ny = np.sum([axes_extents[i][0][1] \
                           for i in range(len(axes_extents))])
 
-        dim =  dimension_calculus(figsize,
-                left, right, bottom, top, wspace, hspace, x_plots, y_plots)
+        if type(figsize[0])==str:
+            # e.g. figsize=("1.5-column", 0.35)
+            figsize = get_size(*figsize)
+
+            dim =  from_figsize_to_subplots_args(figsize, Nx, Ny,
+                                left, right, bottom, top, wspace, hspace)
+        else:
+
+            dim =  from_grid_to_subplots_args(Nx, Ny, ax_scale,
+                                left, right, bottom, top, wspace, hspace)
 
     if page=='A4':
 
@@ -139,6 +160,9 @@ def figure(axes = (1,1),
                             wspace=wspace*fig.subplotpars.wspace,
                             hspace=hspace*fig.subplotpars.hspace)
 
+        fig = plt.figure(figsize=figsize,
+                         dpi=dpi)
+
     else:
 
         fig = plt.figure(figsize=(mm2inch(dim['full_width']),
@@ -147,7 +171,7 @@ def figure(axes = (1,1),
 
     if grid is not None:
         for g in grid:
-            ax = plt.subplot2grid((y_plots, x_plots),
+            ax = plt.subplot2grid((Ny, Nx),
                                   (g[1], g[0]),
                                   colspan=g[2],
                                   rowspan=g[3])
@@ -160,7 +184,7 @@ def figure(axes = (1,1),
             i0_line = 0
             for i in range(len(axes_extents[j])):
                 AX_line.append(plt.subplot2grid(\
-                                                (y_plots, x_plots),
+                                                (Ny, Nx),
                                                 (j0_row, i0_line),\
                                                 colspan=axes_extents[j][i][0],
                                                 rowspan=axes_extents[j][i][1]))
@@ -197,6 +221,22 @@ def figure(axes = (1,1),
     else:
         return fig, AX
 
+def get_size(size='1-column',
+             height_to_width=0.4):
+    """
+    some standard sizes for manuscript figures
+
+    taking the Cell Press size requirements:
+    https://www.cell.com/information-for-authors/figure-guidelines
+    """
+    if size == '1-column':
+        width = mm2inch(85.) 
+    elif size == '1.5-column':
+        width = mm2inch(114.)
+    elif size == '2-column':
+        width = mm2inch(174.)
+
+    return (width, height_to_width*width)
 
 def save(fig, 
          on='Desktop', 
@@ -209,10 +249,13 @@ def save(fig,
         otherwise relative path, e.g. on='./temp', saves as './temp/fig.svg'
     """
     
-    if on[0]=='.':
+    if on=='temp':
+        path = os.path.join(tempfile.tempdir, fig_name)
+    elif on[0]=='.':
         path = os.path.join(*os.path.split(on), fig_name)
     else:
-        path = os.path.join(os.path.expanduser('~'), *os.path.split(on), fig_name)
+        path = os.path.join(os.path.expanduser('~'), 
+                            *os.path.split(on), fig_name)
   
     fig.savefig(path, transparent=transparent, dpi=dpi)
 

@@ -38,11 +38,10 @@ def two_variable_analysis(cls,
 
 def scatter(x=None, y=None, sx=None, sy=None, 
             X=None, Y=None, sX=None, sY=None,
-            color='k', edgecolor='k', alpha=1.,
+            color=None, edgecolor=None, alpha=1.,
             COLORS=None, colormap=viridis,
             ax=None, fig=None,
-            lw=0, alpha_std=0.3,
-            ms=4, m='o', ls='-',
+            lw=0, ms=5, m='o', ls='-',
             label=None, LABELS=None):
     """    
     return fig, ax

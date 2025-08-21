@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pylab as plt
 from matplotlib.ticker import MaxNLocator, NullFormatter
 
-def compute_axes_args(axes_args, xlabel='', ylabel='', title=''):
+def compute_axes_args(axes_args, 
+                      xlabel='', ylabel='', title=''):
     """ to have the alternative between just "xlabel, ylabel, title" arguments and full "axes_args" argument in functions """
     _axes_args = {}
     for key, val in axes_args.items():
@@ -224,7 +225,8 @@ def find_good_log_ticks(lim=[0.009, 0.0099]):
 
     return lim, majorticks, minorticks
 
-def set_ticks_to_log10_axis(axis, bounds, normed_to_unit=False, fontsize=8):
+def set_ticks_to_log10_axis(axis, bounds, 
+                            normed_to_unit=False, fontsize=8):
     
     lim, major_ticks, minor_ticks = find_good_log_ticks(lim=bounds)
 

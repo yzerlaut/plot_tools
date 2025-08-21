@@ -29,6 +29,7 @@ setup(
         "svgutils==0.3.4",
         "numpy>=1.21",
         "scipy>=1.6",
-        "scikit-image>=0.16"
+        "scikit-image>=0.16",
+        "tempfile",
     ]
 )
