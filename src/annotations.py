@@ -158,11 +158,11 @@ def draw_bar_scales(ax,
     if Xbar==0:
         Xbar = (xlim[1]-xlim[0])*Xbar_fraction
         Xbar_label = Xbar_label_format % Xbar
-        print('X-bar label automatically set to: ', Xbar_label, ' Using the format', Xbar_label_format, ' --> adjust it and add units through the format !')
+        # print('X-bar label automatically set to: ', Xbar_label, ' Using the format', Xbar_label_format, ' --> adjust it and add units through the format !')
     if Ybar==0:
         Ybar = (ylim[1]-ylim[0])*Ybar_fraction
         Ybar_label = Ybar_label_format % Ybar
-        print('Y-bar label automatically set to: ', Ybar_label, ' Using the format', Ybar_label_format, ' --> adjust it and add units through the format !')
+        # print('Y-bar label automatically set to: ', Ybar_label, ' Using the format', Ybar_label_format, ' --> adjust it and add units through the format !')
 
     if type(loc) is tuple:
         xyLoc = xlim[0]+loc[0]*(xlim[1]-xlim[0]), ylim[0]+loc[1]*(ylim[1]-ylim[0])
