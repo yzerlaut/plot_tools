@@ -1,8 +1,12 @@
 ### FIGURE
-figure.facecolor: dimgrey
+figure.facecolor: 1f1f1f
 figure.dpi: 150
-figure.figsize: 1.7, 1.3
+figure.figsize: 1.5, 1.2 # ratio width/height = 1.25
 figure.titlesize: 7
+figure.subplot.left: 0.3
+figure.subplot.right: 0.95
+figure.subplot.bottom: 0.3
+figure.subplot.top: 0.95
 savefig.transparent: True
 # figure.titleweight: bold
 figure.autolayout: False # When True, automatically adjust subplot
@@ -31,7 +35,7 @@ font.size: 7
 
 ### AXES
 axes.grid: False
-axes.facecolor: grey
+axes.facecolor: 1f1f1f
 axes.edgecolor: lightgrey
 axes.labelcolor: lightgrey
 axes.titlecolor: lightgrey
@@ -42,7 +46,8 @@ axes.labelsize: 7
 # axes.labelweight: bold
 axes.spines.top: False
 axes.spines.right: False
-axes.prop_cycle: cycler('color', ['0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
+axes.prop_cycle: cycler('color', ['w', '0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
+
 
 ### LINES
 lines.markersize: 2.5 # marker size, in points
