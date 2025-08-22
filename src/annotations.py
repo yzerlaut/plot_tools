@@ -155,6 +155,9 @@ def draw_bar_scales(ax,
     """
     xlim, ylim = ax.get_xlim(), ax.get_ylim()
 
+    if color is None:
+        color = plt.rcParams['axes.prop_cycle'].by_key()['color'][0]
+
     if Xbar==0:
         Xbar = (xlim[1]-xlim[0])*Xbar_fraction
         Xbar_label = Xbar_label_format % Xbar

@@ -8,6 +8,10 @@ def single_curve(ax, x, y, sy,
                  lw=1, ms=0, ls='-', m='',
                  label=None, alpha=1.,
                  alpha_std=0.3):
+
+    if color is None:
+        color = plt.rcParams['axes.prop_cycle'].by_key()['color'][0]
+
     # we print a single curve
     ax.plot(x, y, color=color, lw=lw, label=label, linestyle=ls, marker=m, ms=ms, alpha=alpha)
     # then errorbars if needed:
