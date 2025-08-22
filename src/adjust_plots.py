@@ -337,7 +337,7 @@ if __name__=='__main__':
                 ylabel='blabla',
                 # yticks_rotation=20, size='x-small',
                 tck_outward=2, ycolor='tab:red')
-    set_plot(ax, ycolor='tab:blue', xcolor='k',
+    set_plot(ax, ycolor='tab:blue', xcolor=None,
                 yscale='log', xscale='already-log10', ylabel='blabal', 
                 tck_outward=2, xlabel='trying', ylabelpad=-5)
 

@@ -17,7 +17,7 @@ def two_variable_analysis(cls,
 
     if colormap is None:
         def colormap(x):
-            return 'k'
+            return None
         
     fig, ax = cls.figure(**fig_args)
     
@@ -72,7 +72,7 @@ def scatter(x=None, y=None, sx=None, sy=None,
 
 
 def single_curve(ax, x, y, sx, sy,
-                 color='k', edgecolor='None', marker='o', alpha=1,
+                 color=None, edgecolor='None', marker='o', alpha=1,
                  label='',
                  lw=0, ms=3, elw=1):
     if (sy is None) and (sx is None):
@@ -134,7 +134,7 @@ if __name__=='__main__':
     scatter(np.arange(20),
             np.random.randn(20),
             sy=.5*np.random.randn(20),
-            color='k', edgecolor='tab:brown', lw=0, alpha=.3)
+            color=None, edgecolor='tab:brown', lw=0, alpha=.3)
     # set_plot(ax,  xlabel='xlabel (xunit)', ylabel='ylabel (yunit)')
 
     # ge.two_variable_analysis(np.random.randn(10), np.random.randn(10),

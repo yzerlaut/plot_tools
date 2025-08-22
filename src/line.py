@@ -4,7 +4,7 @@ from matplotlib.collections import LineCollection
 
 def single_curve(ax, x, y, sy,
                  sy1=None, sy2=None,
-                 color='k',
+                 color=None,
                  lw=1, ms=0, ls='-', m='',
                  label=None, alpha=1.,
                  alpha_std=0.3):
@@ -73,7 +73,7 @@ def multiple_curves(ax, X, Y, sY, COLORS, LABELS,
                             np.array(y)+np.array(sy),
                             color=c, lw=0, alpha=alpha_std)
 
-def plot(x=None, y=None, sy=None, sy1=None, sy2=None, color='k',
+def plot(x=None, y=None, sy=None, sy1=None, sy2=None, color=None,
          X=None, Y=None, sY=None, sY1=None, sY2=None,
          COLORS=None, colormap=plt.cm.viridis,
          fig = None, ax=None,

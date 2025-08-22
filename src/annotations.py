@@ -37,7 +37,7 @@ def arrow(stuff,
           head_width=0.15, head_length=0.02,
           width_margin=0., height_margin=0.1,
           shape='full',
-          color='k'):
+          color=None):
     
     [x0,y0, dx, dy] = rect
 

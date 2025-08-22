@@ -64,7 +64,7 @@ def set_bar_legend(ax_cb, cb,
                    label='',
                    orientation='vertical',
                    label_position='right',
-                   color='k',
+                   color=None,
                    labelpad=1.,
                    size='', 
                    fontsize=None):
@@ -98,7 +98,7 @@ def build_bar_legend(ax_cb, X, mymap,
                      orientation='vertical',
                      alpha=1.,
                      scale='linear',\
-                     font_color='k',
+                     font_color=None,
                      color_discretization=None):
     
     """ X -> ticks """
