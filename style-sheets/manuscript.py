@@ -47,7 +47,7 @@ axes.labelsize: 8
 # axes.labelweight: bold
 axes.spines.top: False
 axes.spines.right: False
-axes.prop_cycle: cycler('color', ['0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
+axes.prop_cycle: cycler('color', ['k', '0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
 
 ### LINES
 lines.markersize: 2.5 # marker size, in points
