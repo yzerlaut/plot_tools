@@ -1,7 +1,7 @@
 # %%
 import sys
 
-sys.path.append('../..')
+sys.path.append('..')
 import plot_tools as pt
 pt.set_style('dark')
 import matplotlib.pylab as plt
