@@ -29,6 +29,14 @@ def bar_legend(stuff,
         continuous = True
 
     if ax_colorbar is None:
+        print(type(stuff))
+        if type(stuff)==mpl.figure.Figure:
+            colorbar_inset=dict(rect=[.72,.3,.03,.5], 
+                                facecolor=None)
+        else:
+            colorbar_inset=dict(rect=[1.1,.1,.05,.8], 
+                                facecolor=None)
+
         ax_colorbar = inset(stuff, **colorbar_inset)
 
     if continuous:

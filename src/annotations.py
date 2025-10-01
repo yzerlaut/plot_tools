@@ -142,7 +142,7 @@ def draw_bar_scales(ax,
                     xyLoc=None, 
                     Xbar_label2='',Ybar_label2='',
                     color=None, xcolor=None, ycolor=None, ycolor2='grey',
-                    fontsize=8, size='normal',
+                    fontsize=None, size='normal',
                     shift_factor=20., lw=1,
                     remove_axis=False):
     """
