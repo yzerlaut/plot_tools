@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 import matplotlib.pylab as plt
 
@@ -60,15 +61,16 @@ def pie(data,
                                           labeldistance=ext_labels_distance,
                                           colors=COLORS, **pie_args)
 
-    if 'fontsize' not in pie_text_settings:
-        pie_text_settings['fontsize'] = 8
-    if 'fontsize' not in ext_text_settings:
-        ext_text_settings['fontsize'] = 8
-        
-    plt.setp(pie_texts, **pie_text_settings)
-    plt.setp(ext_texts, **ext_text_settings)
+    # if 'fontsize' not in pie_text_settings:
+    #     pie_text_settings['fontsize'] = 8
+    # if 'fontsize' not in ext_text_settings:
+    #     ext_text_settings['fontsize'] = 8
+    # plt.setp(pie_texts, **pie_text_settings)
+    # plt.setp(ext_texts, **ext_text_settings)
     
-    Centre_Circle = plt.Circle((0,0), center_circle, fc='white')
+    Centre_Circle = plt.Circle((0,0),
+                                center_circle, 
+                                fc='white')
     ax.add_artist(Centre_Circle)
                                   
     if legend is not None:
@@ -84,7 +86,8 @@ def pie(data,
 
 
 if __name__=='__main__':
-    
+    pass    
+    # %%
     import sys, pathlib
     sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
     import plot_tools as pt
@@ -101,3 +104,5 @@ if __name__=='__main__':
                      #pie_args=dict(rotate=90), # e.g. for rotation
                      legend=None)  # set legend={} to have it appearing
     plt.show()
+
+# %%

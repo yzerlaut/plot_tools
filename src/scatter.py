@@ -1,3 +1,4 @@
+# %%
 from matplotlib.cm import viridis
 from scipy.stats import pearsonr
 import numpy as np
@@ -41,7 +42,7 @@ def scatter(x=None, y=None, sx=None, sy=None,
             color=None, edgecolor=None, alpha=1.,
             COLORS=None, colormap=viridis,
             ax=None, fig=None,
-            lw=0, ms=5, m='o', ls='-',
+            lw=0, ms=4, m='o', ls='-',
             label=None, LABELS=None):
     """    
     return fig, ax
@@ -126,18 +127,25 @@ def multiple_curves(ax, X, Y, sX, sY, COLORS, LABELS,
 
 
 if __name__=='__main__':
+    pass
+    # %%
 
     import sys, pathlib
     sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
     import plot_tools as pt
     
-    scatter(np.arange(20),
+    fig, ax = scatter(np.arange(20),
             np.random.randn(20),
-            sy=.5*np.random.randn(20),
-            color=None, edgecolor='tab:brown', lw=0, alpha=.3)
-    # set_plot(ax,  xlabel='xlabel (xunit)', ylabel='ylabel (yunit)')
+            sy=.5*np.abs(np.random.randn(20)),
+            color=None, edgecolor='tab:brown', 
+            lw=0, alpha=.3)
+    pt.set_plot(ax,  
+                xlabel='xlabel (xunit)', 
+                ylabel='ylabel (yunit)')
 
     # ge.two_variable_analysis(np.random.randn(10), np.random.randn(10),
                              # colormap=viridis, fig_args=dict(right=5))
     plt.show()
     
+
+# %%

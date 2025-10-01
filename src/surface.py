@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 import matplotlib.pylab as plt
 from matplotlib.cm import viridis
@@ -149,7 +150,8 @@ def matrix(z,
 
 
 if __name__=='__main__':
-    
+    pass
+    # %%
     import sys, pathlib
     sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
     import plot_tools as pt
@@ -177,3 +179,5 @@ if __name__=='__main__':
     pt.set_plot(ax, xlabel='x-label (X)', ylabel='y-label (Y)')
     
     plt.show()
+
+# %%

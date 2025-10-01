@@ -39,7 +39,9 @@ from IPython.display import Image
 Image(os.path.join(tempfile.tempdir, 'fig.png'))
 
 # %%
+# now the same with the manuscript style
 pt.set_style('manuscript')
 fig = gen_fig()
 pt.save(fig, on='Desktop', fig_name='fig.png', dpi=300)
+Image(os.path.join(os.path.expanduser('~'), 'Desktop', 'fig.png'))
 # %%
