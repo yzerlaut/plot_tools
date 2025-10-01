@@ -9,7 +9,8 @@ from .adjust_plots import set_ticks_to_log10_axis
 def bar_legend(stuff,
                X = None, continuous=False,
                ax_colorbar=None,
-               colorbar_inset=dict(rect=[.72,.3,.03,.5], facecolor=None),
+               colorbar_inset=dict(rect=[.72,.3,.03,.5], 
+                                   facecolor=None),
                colormap=plt.cm.copper,
                bar_legend_args={},
                label='',
@@ -71,8 +72,13 @@ def set_bar_legend(ax_cb, cb,
     """
     Just for labels and fontsize
     """
-        
-    cb.set_label(label, labelpad=labelpad, fontsize=fontsize, color=color)
+    if color is None:
+        # need to specify the color for the functions below !
+        color = plt.rcParams['axes.prop_cycle'].by_key()['color'][0]
+
+    cb.set_label(label, labelpad=labelpad, 
+                 color=color,
+                 fontsize=fontsize)
     
     if orientation=='vertical':
         ax_cb.tick_params(axis='y', labelsize=fontsize, color=color)
