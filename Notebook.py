@@ -44,4 +44,9 @@ pt.set_style('manuscript')
 fig = gen_fig()
 pt.save(fig, on='Desktop', fig_name='fig.png', dpi=300)
 Image(os.path.join(os.path.expanduser('~'), 'Desktop', 'fig.png'))
+
+# %%
+pt.pie([0.4, 0.6],
+       COLORS=['tab:green', 'tab:red'])
+
 # %%
