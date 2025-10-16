@@ -46,7 +46,8 @@ pt.save(fig, on='Desktop', fig_name='fig.png', dpi=300)
 Image(os.path.join(os.path.expanduser('~'), 'Desktop', 'fig.png'))
 
 # %%
-pt.pie([0.4, 0.6],
+fig, ax = pt.figure()
+pt.pie([0.4, 0.6], ax=ax,
        COLORS=['tab:green', 'tab:red'])
 
 # %%
