@@ -13,7 +13,7 @@ figure.autolayout: False # When True, automatically adjust subplot
 
 ### LINE
 lines.linewidth: 1
-lines.color: white
+lines.color: lightgrey
 
 ### PATCHES
 patch.facecolor: 0072B2
@@ -46,7 +46,7 @@ axes.labelsize: 7
 # axes.labelweight: bold
 axes.spines.top: False
 axes.spines.right: False
-axes.prop_cycle: cycler('color', ['w', '0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
+axes.prop_cycle: cycler('color', ['lightgrey', '0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
 
 
 ### LINES
