@@ -1,24 +1,9 @@
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:percent
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.14.0
-#   kernelspec:
-#     display_name: Python 3 (ipykernel)
-#     language: python
-#     name: python3
-# ---
-
 # %%
 import sys
 
-sys.path.append('../..')
+sys.path.append('..')
 import plot_tools as pt
-pt.set_style('dark-notebook')
+pt.set_style('dark')
 import matplotlib.pylab as plt
 import numpy as np
 
@@ -54,7 +39,15 @@ from IPython.display import Image
 Image(os.path.join(tempfile.tempdir, 'fig.png'))
 
 # %%
+# now the same with the manuscript style
 pt.set_style('manuscript')
 fig = gen_fig()
 pt.save(fig, on='Desktop', fig_name='fig.png', dpi=300)
+Image(os.path.join(os.path.expanduser('~'), 'Desktop', 'fig.png'))
+
+# %%
+fig, ax = pt.figure()
+pt.pie([0.4, 0.6], ax=ax,
+       COLORS=['tab:green', 'tab:red'])
+
 # %%

@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 import matplotlib.pylab as plt
 
@@ -10,12 +11,12 @@ def pie(data,
         ext_labels_distance = 1.1,
         pie_labels_distance = 0.6,
         pie_labels_digits = 1,
-        ext_text_settings=dict(weight='normal'),
-        pie_text_settings=dict(weight='normal', color='k'),
+        ext_text_settings=dict(weight='normal',
+                               color=None),
+        pie_text_settings=dict(weight='normal',
+                               color=None),
         center_circle=0.3,
         title='',
-        fig_args=dict(bottom=0.3, left=0.7, top=1.),
-        axes_args={},
         pie_args={},
         legend=None):
 
@@ -68,7 +69,9 @@ def pie(data,
     plt.setp(pie_texts, **pie_text_settings)
     plt.setp(ext_texts, **ext_text_settings)
     
-    Centre_Circle = plt.Circle((0,0), center_circle, fc='white')
+    Centre_Circle = plt.Circle((0,0),
+                                center_circle, 
+                                fc='white')
     ax.add_artist(Centre_Circle)
                                   
     if legend is not None:
@@ -84,7 +87,8 @@ def pie(data,
 
 
 if __name__=='__main__':
-    
+    pass    
+    # %%
     import sys, pathlib
     sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
     import plot_tools as pt
@@ -101,3 +105,5 @@ if __name__=='__main__':
                      #pie_args=dict(rotate=90), # e.g. for rotation
                      legend=None)  # set legend={} to have it appearing
     plt.show()
+
+# %%
