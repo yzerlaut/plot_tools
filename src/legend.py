@@ -19,7 +19,7 @@ def bar_legend(stuff,
                no_ticks=False,
                orientation='vertical',
                scale='linear',\
-               labelpad=2., size='', fontsize=None, alpha=1.,
+               labelpad=2., fontsize=None, alpha=1.,
                color_discretization=None):
     """
     
@@ -52,7 +52,7 @@ def bar_legend(stuff,
     bar_legend_args['orientation'] = orientation
     bar_legend_args['label'] = label
     bar_legend_args['labelpad'] = labelpad
-    bar_legend_args['size'] = size
+    bar_legend_args['fontsize'] = fontsize
         
     set_bar_legend(ax_colorbar, cb, **bar_legend_args)
     
@@ -64,9 +64,8 @@ def set_bar_legend(ax_cb, cb,
                    label='',
                    orientation='vertical',
                    label_position='right',
-                   color=None,
-                   labelpad=1.,
-                   size='', 
+                   color='k',
+                   labelpad=1., 
                    fontsize=None):
     """
     Just for labels and fontsize

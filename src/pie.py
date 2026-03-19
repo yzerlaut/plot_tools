@@ -11,7 +11,7 @@ def pie(data,
         pie_labels_distance = 0.6,
         pie_labels_digits = 1,
         ext_text_settings=dict(weight='normal'),
-        pie_text_settings=dict(weight='normal', color=None),
+        pie_text_settings=dict(weight='normal', color='k'),
         center_circle=0.3,
         title='',
         fig_args=dict(bottom=0.3, left=0.7, top=1.),
@@ -64,7 +64,7 @@ def pie(data,
         pie_text_settings['fontsize'] = 8
     if 'fontsize' not in ext_text_settings:
         ext_text_settings['fontsize'] = 8
-        
+    
     plt.setp(pie_texts, **pie_text_settings)
     plt.setp(ext_texts, **ext_text_settings)
     
