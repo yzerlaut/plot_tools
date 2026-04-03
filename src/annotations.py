@@ -241,6 +241,29 @@ def draw_bar_scales(ax,
         ax.axis('off')
 
 
+def add_labels(fig, labels):
+    """
+    add labels on a figure
+    labels should be of the following form 
+    COORDINATES in CM !!
+
+            labels = {
+                'A': {'left': 1.1, 'bottom': 5.8},
+                'B': {'left': 5.1, 'bottom': 5.8},
+                'C': {'left': 1.1, 'bottom': 2.9},
+            }
+
+    """
+    figsize = fig.get_size_inches()
+    inch_to_cm = 2.54
+    for label in labels:
+        x = labels[label]['left']/(figsize[0]*inch_to_cm)
+        y = labels[label]['bottom']/(figsize[1]*inch_to_cm)
+        annotate(fig, label, (x,y),
+                 xycoords='figure fraction',
+                 ha='right', bold=True, fontsize='large')
+
+
 if __name__=='__main__':
 
     import sys, os, pathlib

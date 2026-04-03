@@ -1,6 +1,7 @@
 import os, tempfile
 import numpy as np
 import matplotlib.pylab as plt
+from matplotlib.patches import Rectangle
 
 def mm2inch(x):
     return x/25.4
@@ -139,16 +140,8 @@ def figure(axes = (1,1),
         Ny = np.sum([axes_extents[i][0][1] \
                           for i in range(len(axes_extents))])
 
-        if type(figsize[0])==str:
-            # e.g. figsize=("1.5-column", 0.35)
-            figsize = get_size(*figsize)
-
-            dim =  from_figsize_to_subplots_args(figsize, Nx, Ny,
-                                left, right, bottom, top, wspace, hspace)
-        else:
-
-            dim =  from_grid_to_subplots_args(Nx, Ny, ax_scale,
-                                left, right, bottom, top, wspace, hspace)
+        dim =  from_grid_to_subplots_args(Nx, Ny, ax_scale,
+                            left, right, bottom, top, wspace, hspace)
 
     if page=='A4':
 
@@ -221,22 +214,89 @@ def figure(axes = (1,1),
     else:
         return fig, AX
 
-def get_size(size='1-column',
-             height_to_width=0.4):
+def get_width(size='1-column'):
     """
     some standard sizes for manuscript figures
-
+    return in cm  
     taking the Cell Press size requirements:
     https://www.cell.com/information-for-authors/figure-guidelines
     """
     if size == '1-column':
-        width = mm2inch(85.) 
+        return 8.5
     elif size == '1.5-column':
-        width = mm2inch(114.)
-    elif size == '2-column':
-        width = mm2inch(174.)
+        return 11.4
+    elif '2-column' in size: # handle "2-columns" also
+        return 17.4
+    else:
+        print()
+        print('  Figure Size not Recognized !!!')
+        print('         possibilities are:')
+        print('           "1-column", "1.5-column", "2-columns" ')
+        print()
 
-    return (width, height_to_width*width)
+
+
+def multipanel_figure(panels, 
+                      figsize=('1-column', 5),
+                      borders=True):
+    """
+    Create a multi-panel figure using physical dimensions (cm).
+
+    Parameters
+    ----------
+    panels : dict
+        Each entry should be a dict containing:
+            - 'left'   : float (cm from left)
+            - 'bottom' : float (cm from bottom)
+            - 'width'  : float (cm)
+            - 'height' : float (cm)
+
+
+    figsize_cm : tuple
+        Figure size in cm (width, height)
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+    axes : dict or list
+    """
+
+    if type(figsize[0])==str:
+        figsize = (get_width(figsize[0]), # mm to cm
+                   figsize[1])
+
+    # Convert cm → inches
+    cm_to_inch = 1 / 2.54
+    figsize_inch = (figsize[0] * cm_to_inch,
+                    figsize[1] * cm_to_inch)
+
+    fig = plt.figure(figsize=figsize_inch)
+
+    fig_w_cm, fig_h_cm = figsize
+
+    for key, panel in panels.items():
+        # Convert cm → normalized [0,1]
+        left   = panel['left']   / fig_w_cm
+        bottom = panel['bottom'] / fig_h_cm
+        width  = panel['width']  / fig_w_cm
+        height = panel['height'] / fig_h_cm
+
+        ax = fig.add_axes([left, bottom, width, height])
+
+        panel['ax'] = ax
+
+    if borders:
+        # draw a rectangle around the figure
+        rect = Rectangle(
+            (0, 0), 1, 1,
+            transform=fig.transFigure,
+            fill=False,
+            edgecolor='black',
+            linewidth=0.8  # thin line
+        )
+        fig.patches.append(rect)
+
+    return fig
 
 def save(fig, 
          on='Desktop', 
