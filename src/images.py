@@ -19,7 +19,7 @@ def image(X,
     else:
         fig = None 
 
-    if type(X)==str:
+    if type(X) in [str]:
         X = load_image(X)
 
     ax.imshow(X.T, 
@@ -38,7 +38,6 @@ def image(X,
 
 def load_image(image_path):
 
-    print(image_path)
     img = color.rgb2gray(io.imread(image_path))
     
     return np.rot90(np.array(img), k=3) # needs rotation
