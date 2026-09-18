@@ -267,11 +267,11 @@ def add_labels(fig, labels):
 def timestamp(fig):
     timestamp = \
         datetime.datetime.now().strftime("%Y-")+\
-        datetime.datetime.now().strftime("%m-%B")+\
+        datetime.datetime.now().strftime("%m-")+\
         datetime.datetime.now().strftime("%d-")+\
-        datetime.datetime.now().strftime("%A-")+\
-        datetime.datetime.now().strftime("%H.%M.%S")
-    annotate(fig, timestamp, (1,1), va='top', ha='right', fontsize=5)
+        datetime.datetime.now().strftime("%H:%M:%S ")
+    annotate(fig, timestamp, (.999,.999), 
+             va='top', ha='right', fontsize=4)
 
 if __name__=='__main__':
 
