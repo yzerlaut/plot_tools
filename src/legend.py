@@ -223,7 +223,6 @@ def legend(ax,
 
     plt.setp(leg.get_texts(), color=color)
 
-    
 
 if __name__=='__main__':
 

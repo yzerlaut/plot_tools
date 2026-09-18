@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pylab as plt
 from matplotlib.figure import Figure
+import datetime
 
 from .inset import inset
 
@@ -263,6 +264,14 @@ def add_labels(fig, labels):
                  xycoords='figure fraction',
                  ha='right', bold=True, fontsize='large')
 
+def timestamp(fig):
+    timestamp = \
+        datetime.datetime.now().strftime("%Y-")+\
+        datetime.datetime.now().strftime("%m-%B")+\
+        datetime.datetime.now().strftime("%d-")+\
+        datetime.datetime.now().strftime("%A-")+\
+        datetime.datetime.now().strftime("%H.%M.%S")
+    annotate(fig, timestamp, (1,1), va='top', ha='right', fontsize=5)
 
 if __name__=='__main__':
 

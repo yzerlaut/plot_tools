@@ -30,7 +30,8 @@ def gen_fig():
 
 fig = gen_fig()
 pt.save(fig, on='temp', fig_name='fig.png')
-    
+pt.timestamp(fig)    
+
 # %%
 # CHECK THAT THE FIGURE NICELY FITS
 import tempfile
