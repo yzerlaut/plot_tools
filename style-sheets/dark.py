@@ -8,7 +8,7 @@ figure.subplot.right: 0.95
 figure.subplot.bottom: 0.3
 figure.subplot.top: 0.95
 savefig.transparent: False 
-savefig.color: 1c1c1c
+savefig.facecolor: 1c1c1c
 # figure.titleweight: bold
 figure.autolayout: False # When True, automatically adjust subplot
 
