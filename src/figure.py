@@ -301,7 +301,7 @@ def multipanel_figure(panels,
 def save(fig, 
          on='Desktop', 
          fig_name='fig.svg',
-         transparent=True,
+         transparent=False,
          dpi='figure'):
     """
     - on:
@@ -317,7 +317,11 @@ def save(fig,
         path = os.path.join(os.path.expanduser('~'), 
                             *os.path.split(on), fig_name)
   
-    fig.savefig(path, transparent=transparent, dpi=dpi)
+    if transparent:
+        fig.savefig(path, transparent=True, dpi=dpi)
+    else:
+        fig.savefig(path, dpi=dpi)
+
 
 def show():
     plt.show()
