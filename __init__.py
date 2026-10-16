@@ -31,6 +31,10 @@ def set_style(label='manuscript'):
     elif label in ['dark']:
         pylab.style.use(os.path.join(pathlib.Path(__file__).resolve().parent,
                                     'style-sheets', 'dark.py'))
+    elif label in ['slides-light', 'slides-dark']:
+        # matched to the 16:9 Quarto talk template (full slide frame)
+        pylab.style.use(os.path.join(pathlib.Path(__file__).resolve().parent,
+                                    'style-sheets', label+'.py'))
     else:
         pylab.style.use(os.path.join(pathlib.Path(__file__).resolve().parent,
                                     'style-sheets', 'manuscript.py'))

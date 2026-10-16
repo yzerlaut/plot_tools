@@ -129,6 +129,104 @@ def put_list_of_figs_to_svg_fig(FIGS,
         #     from datavyz..graphs import show
         #     show()
 
+def _flatten_artists(item):
+    """ artists from an artist, a container (ax.bar, ax.errorbar, ...),
+    or a (nested) list / tuple of those """
+    from matplotlib.artist import Artist
+    from matplotlib.container import Container
+    if item is None:
+        return []
+    if isinstance(item, Container):
+        return [a for child in item.get_children()
+                for a in _flatten_artists(child)]
+    if isinstance(item, Artist):
+        return [item]
+    if isinstance(item, (list, tuple)):
+        return [a for child in item for a in _flatten_artists(child)]
+    raise TypeError('save_layers: cannot export %s as a layer element' % type(item))
+
+
+def save_layers(fig, fig_name, layers,
+                labels=None,
+                base_label='base',
+                **savefig_kwargs):
+    """
+    save the figure as an SVG where groups of elements are on separate
+    Inkscape layers, e.g. to make them appear one by one in a presentation
+    (talk template: each layer after the first appears on the next click)
+
+    fig:     the matplotlib figure
+    layers:  list of layers, each a list of elements (lines, scatter,
+             ax.bar(...) / ax.errorbar(...) results, texts, legend, axes...)
+             -> layer 1, layer 2, ...;  everything else is on a first
+                "base" layer (axes, ticks, labels, ...)
+    labels:  optional names of the layers (default: "layer 1", ...)
+
+    e.g.
+        l1, = ax.plot(t, x)
+        l2, = ax.plot(t, y)
+        bars = ax.bar(...)
+        pt.save_layers(fig, 'fig.svg', [[l1], [l2], [bars, ax.legend()]])
+
+    [!!] a layer is drawn on top of the previous ones (whatever the zorder)
+    """
+    import io
+    import xml.etree.ElementTree as ET
+
+    SVG, INK = 'http://www.w3.org/2000/svg', 'http://www.inkscape.org/namespaces/inkscape'
+    for prefix, uri in [('', SVG), ('inkscape', INK),
+                        ('xlink', 'http://www.w3.org/1999/xlink'),
+                        ('dc', 'http://purl.org/dc/elements/1.1/'),
+                        ('cc', 'http://creativecommons.org/ns#'),
+                        ('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')]:
+        ET.register_namespace(prefix, uri)
+
+    if labels is None:
+        labels = ['layer %i' % (k+1) for k in range(len(layers))]
+
+    # tag the elements of each layer (unique svg ids), keeping their gids
+    artists = [_flatten_artists(layer) for layer in layers]
+    previous_gids = {}
+    for k, layer in enumerate(artists):
+        for i, a in enumerate(layer):
+            previous_gids.setdefault(a, a.get_gid())
+            a.set_gid('pt-layer%i-%i' % (k+1, i))
+    try:
+        buffer = io.StringIO()
+        fig.savefig(buffer, format='svg', **savefig_kwargs)
+    finally:
+        for a, gid in previous_gids.items():
+            a.set_gid(gid)
+    buffer.seek(0)
+    root = ET.parse(buffer).getroot()
+
+    def layer_group(label, k):
+        return ET.SubElement(root, '{%s}g' % SVG,
+                             {'{%s}groupmode' % INK: 'layer',
+                              '{%s}label' % INK: label,
+                              'id': 'layer%i' % k})
+
+    # base layer: the whole figure
+    figure_group = root.find('{%s}g' % SVG)
+    root.remove(figure_group)
+    layer_group(base_label, 0).append(figure_group)
+
+    # one layer per group of elements (in document order)
+    for k, label in enumerate(labels[:len(layers)]):
+        group = layer_group(label, k+1)
+        prefix = 'pt-layer%i-' % (k+1)
+        for element in [e for e in figure_group.iter()
+                        if e.get('id', '').startswith(prefix)]:
+            parent = {c: p for p in root.iter() for c in p}[element]
+            parent.remove(element)
+            group.append(element)
+        if len(group)==0:
+            print('[!!] layer "%s" is empty (elements not drawn?)' % label)
+
+    ET.ElementTree(root).write(fig_name, xml_declaration=True, encoding='utf-8')
+    return fig_name
+
+
 def export_as_png(fig_name,
                   dpi=300, background='white'):
     instruction = 'inkscape %s --export-area-page --export-background="%s" --export-type=png --export-filename="%s" --export-dpi=%i' % (fig_name, background, fig_name.replace('.svg', '.png'), dpi)
